@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="An interactive 3D view of the sky that shows how a natal chart maps onto what you would see overhead.">
+<title>Spherechart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Marcellus&family=Noto+Sans+Symbols:wght@400;600&family=Noto+Sans+Symbols+2&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* Layout: an observatory instrument. Sky on the left, chart wheel on the right, controls under the sky.
+     One visual world (night), single theme by choice. Line colours carry meaning and repeat in both views. */
+  --ink: #0a0d1e;
+  --panel: #12173a;
+  --panel-2: #1a2050;
+  --rule: #2a3166;
+  --text: #ece8da;
+  --muted: #a0a5c6;
+  --gold: #e3b95a;   /* ecliptic and signs */
+  --teal: #63d1b0;   /* horizon */
+  --violet: #a99bff; /* meridian */
+  --rose: #ea8fb0;   /* houses */
+  --blue: #7fa9ff;   /* equator */
+  --con: #8fa0d8;    /* constellations */
+  --font-display: 'Marcellus', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
+  --font-body: 'Albert Sans', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-glyph: 'Noto Sans Symbols', 'Noto Sans Symbols 2', 'Segoe UI Symbol', 'Apple Symbols', 'DejaVu Sans', sans-serif;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--ink); color: var(--text); font: 400 15px/1.5 var(--font-body); -webkit-font-smoothing: antialiased; }
+.page { max-width: 1500px; margin: 0 auto; padding: 18px clamp(16px, 2.4vw, 32px) 28px; display: flex; flex-direction: column; gap: 16px; }
+
+header.top { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 14px 28px; justify-content: space-between; }
+.brand h1 { font: 400 30px/1.05 var(--font-display); letter-spacing: .02em; margin: 0; text-wrap: balance; }
+.brand p { margin: 4px 0 0; color: var(--muted); font-size: 14px; max-width: 46ch; }
+.moment { display: flex; flex-wrap: wrap; gap: 10px 12px; align-items: flex-end; }
+.field { display: flex; flex-direction: column; gap: 3px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.field input, .field select, .speed select {
+  font: 500 14px var(--font-body); color: var(--text); background: var(--panel); border: 1px solid var(--rule);
+  border-radius: 6px; padding: 7px 9px; min-height: 36px; letter-spacing: 0; text-transform: none;
+}
+.field input[type=number] { width: 92px; }
+#city { max-width: 170px; } #tz { max-width: 190px; }
+button { font: 600 13px var(--font-body); color: var(--text); background: var(--panel-2); border: 1px solid var(--rule); border-radius: 6px; padding: 7px 12px; min-height: 36px; cursor: pointer; }
+button:hover { border-color: var(--gold); }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.stage { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(330px, 1fr); gap: 18px; align-items: start; }
+@media (max-width: 1020px) { .stage { grid-template-columns: minmax(0, 1fr); } }
+.col { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+
+.skywrap { position: relative; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; background: #070b1c; height: clamp(360px, 66vh, 760px); }
+#sky { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; transition: opacity .16s ease; }
+#sky.dragging { cursor: grabbing; }
+.overlay { position: absolute; display: flex; gap: 6px; }
+.viewbar { display: flex; flex-wrap: wrap; gap: 8px; }
+.viewbar .seg { flex-wrap: wrap; }
+.overlay.tr { top: 10px; right: 10px; flex-direction: column; }
+.overlay.tr button { width: 34px; min-height: 34px; padding: 0; font-size: 18px; line-height: 1; background: rgba(18, 23, 58, .85); }
+.probe { position: absolute; left: 12px; bottom: 10px; right: 12px; font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; pointer-events: none; text-shadow: 0 1px 3px #000; }
+.probe b { color: var(--text); font-weight: 600; }
+
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 7px; overflow: hidden; background: rgba(18, 23, 58, .88); }
+.seg label { position: relative; cursor: pointer; user-select: none; -webkit-user-select: none; }
+.seg input { position: absolute; opacity: 0; inset: 0; cursor: pointer; margin: 0; }
+.seg span { display: block; padding: 7px 12px; font: 600 13px var(--font-body); color: var(--muted); border-right: 1px solid var(--rule); white-space: nowrap; }
+.seg label:last-child span { border-right: 0; }
+.seg input:checked + span { background: var(--gold); color: #1b1503; }
+.seg input:focus-visible + span { outline: 2px solid var(--text); outline-offset: -3px; }
+
+.timebar { display: grid; grid-template-columns: auto minmax(120px, 1fr) auto; gap: 10px 12px; align-items: center; background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 10px 12px; }
+.timebar .now { grid-column: 1 / -1; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 14px; font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; }
+.timebar .now strong { color: var(--text); font-weight: 600; font-size: 15px; }
+.playgrp, .stepgrp { display: flex; gap: 6px; align-items: center; flex-wrap: wrap; }
+#play { min-width: 76px; background: var(--gold); color: #1b1503; border-color: var(--gold); }
+.speed select { min-height: 36px; }
+input[type=range] { width: 100%; accent-color: var(--gold); min-height: 28px; }
+@media (max-width: 640px) { .timebar { grid-template-columns: 1fr; } }
+
+.layers { display: flex; flex-wrap: wrap; gap: 10px 22px; background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 12px; }
+.grp { display: flex; flex-direction: column; gap: 6px; }
+.grp h3 { margin: 0; font: 600 11px var(--font-body); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chip { position: relative; display: inline-flex; align-items: center; gap: 7px; padding: 5px 10px 5px 8px; border: 1px solid var(--rule); border-radius: 999px; font-size: 13px; cursor: pointer; color: var(--muted); user-select: none; }
+.chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+.chip .sw { width: 14px; height: 3px; border-radius: 2px; background: var(--c, var(--muted)); opacity: .35; }
+.chip:has(input:checked) { color: var(--text); border-color: var(--c, var(--muted)); background: var(--panel-2); }
+.chip:has(input:checked) .sw { opacity: 1; }
+.chip:has(input:focus-visible) { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+.tour { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 8px; }
+.tour .steps { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.tour h2 { font: 400 18px var(--font-display); margin: 0 10px 0 0; letter-spacing: .02em; }
+.tour .steps button { min-height: 30px; padding: 4px 10px; font-weight: 500; color: var(--muted); }
+.tour .steps button[aria-pressed=true] { background: var(--gold); color: #1b1503; border-color: var(--gold); font-weight: 700; }
+.tour p { margin: 0; max-width: 72ch; color: var(--text); }
+
+.card { background: var(--panel); border: 1px solid var(--rule); border-radius: 10px; padding: 12px; }
+.wheelwrap { display: flex; justify-content: center; }
+#wheel { display: block; width: 100%; max-width: 470px; aspect-ratio: 1; cursor: pointer; }
+.angles { display: flex; flex-wrap: wrap; gap: 6px 8px; margin-top: 8px; font-size: 13px; }
+.angles span { border-left: 3px solid var(--c); padding: 2px 8px; background: var(--panel-2); border-radius: 0 5px 5px 0; font-variant-numeric: tabular-nums; }
+.angles b { font-weight: 600; margin-right: 5px; }
+.detail { min-height: 4.6em; margin: 10px 0 0; font-size: 13.5px; color: var(--text); }
+.detail em { color: var(--muted); font-style: normal; }
+.note { margin: 8px 0 0; font-size: 13px; color: var(--gold); }
+.tablewrap { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+th { text-align: left; font: 600 11px var(--font-body); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 4px 8px 6px; border-bottom: 1px solid var(--rule); }
+td { padding: 5px 8px; border-bottom: 1px solid rgba(42, 49, 102, .55); white-space: nowrap; }
+tbody tr { cursor: pointer; }
+tbody tr:hover, tbody tr.on { background: var(--panel-2); }
+td .g { font-family: var(--font-glyph); display: inline-block; width: 1.4em; }
+td .up { color: var(--teal); } td .down { color: var(--muted); }
+.fine { color: var(--muted); font-size: 12.5px; max-width: 110ch; margin: 0; }
+.fine a { color: var(--text); }
+@media (prefers-reduced-motion: reduce) { #sky { transition: none; } }
+</style>
+</head>
+<body>
+<div class="page">
+  <header class="top">
+    <div class="brand">
+      <h1>Spherechart</h1>
+      <p>Pick a moment and a place. The sky view and the chart wheel show the same thing, drawn two ways.</p>
+    </div>
+    <form class="moment" id="moment" autocomplete="off">
+      <label class="field">Date<input type="date" id="date" min="1700-01-01" max="2200-12-31" required></label>
+      <label class="field">Local time<input type="time" id="time" required></label>
+      <label class="field">Place<select id="city"></select></label>
+      <label class="field">Latitude<input type="number" id="lat" min="-89.9" max="89.9" step="0.01"></label>
+      <label class="field">Longitude (east +)<input type="number" id="lon" min="-180" max="180" step="0.01"></label>
+      <label class="field">Time zone<select id="tz"></select></label>
+      <button type="button" id="now">Now</button>
+    </form>
+  </header>
+
+  <div class="stage">
+    <div class="col">
+      <div class="viewbar">
+          <div class="seg" role="radiogroup" aria-label="Viewpoint">
+        <label><input type="radio" name="view" id="view-ground" value="ground" checked><span>Stand on the ground</span></label>
+        <label><input type="radio" name="view" id="view-outside" value="outside"><span>Step outside the sky</span></label>
+        <label><input type="radio" name="view" id="view-chart" value="chart"><span>Line up with the chart</span></label>
+      </div>
+      </div>
+      <div class="skywrap">
+        <canvas id="sky" tabindex="0" role="img" aria-label="Interactive 3D view of the sky for the chosen moment and place. Drag to look around. The planet table lists the same positions as text."></canvas>
+        <div class="overlay tr">
+          <button type="button" id="zin" aria-label="Zoom in">+</button>
+          <button type="button" id="zout" aria-label="Zoom out">&minus;</button>
+        </div>
+        <div class="probe" id="probe">Drag to look around. Point at the sky to read its coordinates.</div>
+      </div>
+
+      <div class="timebar">
+        <div class="now"><strong id="clock"></strong><span id="clock2"></span></div>
+        <div class="playgrp">
+          <button type="button" id="play" aria-pressed="false">Play</button>
+          <label class="speed"><select id="speed" aria-label="Playback speed">
+            <option value="min10">10 minutes per second</option>
+            <option value="hour" selected>1 hour per second</option>
+            <option value="day">Day by day, same clock time</option>
+          </select></label>
+        </div>
+        <input type="range" id="daytime" min="0" max="1439" step="1" aria-label="Time of day">
+        <div class="stepgrp">
+          <button type="button" data-step="-30">&minus; month</button>
+          <button type="button" data-step="-1">&minus; day</button>
+          <button type="button" data-step="1">+ day</button>
+          <button type="button" data-step="30">+ month</button>
+        </div>
+      </div>
+
+      <div class="layers" id="layers">
+        <div class="grp"><h3>Zodiac</h3><div class="chips">
+          <label class="chip" style="--c:var(--gold)"><input type="checkbox" id="ly-ecl"><span class="sw"></span>Ecliptic</label>
+          <label class="chip" style="--c:var(--gold)"><input type="checkbox" id="ly-signs"><span class="sw"></span>Tropical signs</label>
+          <label class="chip" style="--c:var(--con)"><input type="checkbox" id="ly-cons"><span class="sw"></span>Real constellations</label>
+        </div></div>
+        <div class="grp"><h3>Houses</h3>
+          <div class="seg" role="radiogroup" aria-label="House system">
+            <label><input type="radio" name="houses" id="hs-placidus" value="placidus" checked><span>Placidus</span></label>
+            <label><input type="radio" name="houses" id="hs-whole" value="whole"><span>Whole Sign</span></label>
+            <label><input type="radio" name="houses" id="hs-off" value="off"><span>Off</span></label>
+          </div>
+        </div>
+        <div class="grp"><h3>Sky lines</h3><div class="chips">
+          <label class="chip" style="--c:var(--teal)"><input type="checkbox" id="ly-horizon"><span class="sw"></span>Horizon</label>
+          <label class="chip" style="--c:var(--violet)"><input type="checkbox" id="ly-meridian"><span class="sw"></span>Meridian</label>
+          <label class="chip" style="--c:var(--blue)"><input type="checkbox" id="ly-equator"><span class="sw"></span>Equator and poles</label>
+        </div></div>
+        <div class="grp"><h3>Planets</h3><div class="chips">
+          <label class="chip" style="--c:var(--text)"><input type="checkbox" id="ly-planets"><span class="sw"></span>Planets</label>
+          <label class="chip" style="--c:var(--text)"><input type="checkbox" id="ly-arcs"><span class="sw"></span>Paths across the sky today</label>
+          <label class="chip" style="--c:var(--text)"><input type="checkbox" id="ly-trails"><span class="sw"></span>Paths through the zodiac</label>
+        </div></div>
+        <div class="grp"><h3>Ground view</h3><div class="chips">
+          <label class="chip" style="--c:var(--teal)"><input type="checkbox" id="ly-xray"><span class="sw"></span>See through the ground</label>
+          <label class="chip" style="--c:var(--blue)"><input type="checkbox" id="ly-day"><span class="sw"></span>Daylight</label>
+        </div></div>
+      </div>
+
+      <div class="tour" aria-live="polite">
+        <div class="steps" id="steps"><h2>Walkthrough</h2></div>
+        <p id="tourtext"></p>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="card">
+        <div class="wheelwrap"><canvas id="wheel" role="img" aria-label="Natal chart wheel for the chosen moment. The planet table below lists the same positions as text."></canvas></div>
+        <div class="angles" id="angles"></div>
+        <p class="note" id="note" hidden></p>
+        <p class="detail" id="detail"></p>
+      </div>
+      <div class="card tablewrap">
+        <table>
+          <thead><tr><th>Body</th><th>Zodiac position</th><th>House</th><th>In the sky</th></tr></thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <p class="fine">Built by <a href="/">Brian Duffy</a>. Positions are geocentric and tropical, computed with <a href="https://github.com/cosinekitty/astronomy">Astronomy Engine</a> (good to about an arcminute). Stars and constellation figures come from the <a href="https://github.com/ofrohn/d3-celestial">d3-celestial</a> catalogue. The sky view ignores atmospheric refraction. Paths through the zodiac are solid for the past and dashed for the future. A chart places each planet by its degree along the ecliptic, so a body that sits well off the ecliptic (the Moon, Pluto) can look like it is in a neighbouring Placidus house in the sky view.</p>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/astronomy-engine@2.1.19/astronomy.browser.min.js"></script>
+<script>
+/*__DATA__*/
+/*__ASTRO__*/
+/*__APP__*/
+</script>
+</body>
+</html>
