@@ -117,12 +117,20 @@ tbody tr:hover, tbody tr.on { background: var(--panel-2); }
 td .g { font-family: var(--font-glyph); display: inline-block; width: 1.4em; }
 td .up { color: var(--teal); } td .down { color: var(--muted); }
 .fine { color: var(--muted); font-size: 12.5px; max-width: 110ch; margin: 0; }
+.smallscreen { display: none; margin: 0; padding: 10px 12px; font-size: 14px; color: var(--text); background: var(--panel-2); border: 1px solid var(--gold); border-radius: 8px; }
+@media (max-width: 760px) { .smallscreen { display: block; } }
+@media (max-width: 760px) {
+  .viewbar .seg { display: flex; flex-wrap: nowrap; width: 100%; }
+  .viewbar .seg label { flex: 1 1 0; display: flex; min-width: 0; }
+  .viewbar .seg span { flex: 1; display: flex; align-items: center; justify-content: center; text-align: center; white-space: normal; padding: 8px 6px; line-height: 1.25; }
+}
 .fine a { color: var(--text); }
 @media (prefers-reduced-motion: reduce) { #sky { transition: none; } }
 </style>
 </head>
 <body>
 <div class="page">
+  <p class="smallscreen">Spherechart is built for a larger screen. It works here, but it is much easier to explore on a laptop or desktop.</p>
   <header class="top">
     <div class="brand">
       <h1>Spherechart</h1>
