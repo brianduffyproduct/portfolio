@@ -1,0 +1,4 @@
+# Netlify publishes the "site" folder as-is. There is no build step:
+# site/spherechart/index.html is generated locally by src/spherechart/build.js and committed.
+[build]
+  publish = "site"
