@@ -34,6 +34,8 @@ h2 { font: 600 12px var(--font-body); letter-spacing: .12em; text-transform: upp
 .project p { margin: 0; color: var(--muted); font-size: 16px; max-width: 62ch; }
 .project .go { display: inline-block; margin-top: 14px; font-weight: 600; font-size: 15px; text-decoration: none; }
 .project .go:hover { text-decoration: underline; }
+.project .smallscreen { display: none; margin-top: 10px; font-size: 14px; }
+@media (max-width: 760px) { .project .smallscreen { display: block; } }
 </style>
 </head>
 <body>
@@ -49,6 +51,7 @@ h2 { font: 600 12px var(--font-body); letter-spacing: .12em; text-transform: upp
         <h3><a href="/spherechart/">Spherechart</a></h3>
         <p>I've been studying <a href="https://www.instagram.com/brianduffygram/">Tarot as a healing art</a> for 15 years. The history of Tarot and Astrology are deeply intertwined, but I always had trouble getting started with learning Astrology, because I couldn't clearly visualize how it worked. I collaborated with Claude using Fable 5.2 to build a tool for understanding how exactly astrological charts are depicting what we see when we look up at the sky.</p>
         <a class="go" href="/spherechart/">Open Spherechart &rarr;</a>
+        <p class="smallscreen">Best viewed on a laptop or desktop.</p>
       </li>
     </ul>
   </section>
