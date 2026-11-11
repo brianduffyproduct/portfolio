@@ -7,315 +7,309 @@
 <meta name="description" content="Things Brian Duffy has designed and built.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Noto+Sans+Symbols:wght@500&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
 <style>
 :root {
-  /* Layout: a page from a 1990s illustrated encyclopedia. Bright white paper, objects floating on it
-     with soft shadows and captioned leader lines, a navy title strip and bevelled buttons as the
-     1996 nod, brass for instruments. One theme by choice: the white page is the point. */
-  --paper: #ffffff;
-  --ink: #14183a;
-  --muted: #555a7a;
-  --navy: #1b2a6b;
-  --link: #2440c4;
-  --visited: #6a3d9a;
-  --brass: #b8892b;
-  --brass-dark: #7d5a14;
-  --brass-light: #edd28a;
-  --teal: #1f8a80;
-  --rule: #c9cde0;
-  --grid: #dfe5f6;
+  /* Layout: a scholar's study. A vaulted night sky across the top with the name in it, then a
+     wood-panelled room: bookshelves of curiosities either side, a parchment project card in the
+     middle, a desk along the bottom. One visual world, so a single theme by choice. */
+  --night: #1b1a5c;
+  --wood: #4a2415;
+  --wood-dark: #2c140b;
+  --wood-light: #7a4424;
+  --parchment: #f7ebd1;
+  --parchment-2: #ecd9b0;
+  --ink: #1d1b3f;
+  --ink-soft: #4b4763;
+  --wine: #6f1d3a;
+  --wine-dark: #4d1027;
+  --gold: #d9a441;
+  --gold-light: #f6dc92;
+  --gold-dark: #8a6417;
+  --cream: #fbf3df;
   --font-display: 'Libre Caslon Display', 'Libre Caslon Text', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
   --font-serif: 'Libre Caslon Text', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
   --font-body: 'Source Sans 3', 'Segoe UI', system-ui, -apple-system, sans-serif;
   color-scheme: light;
 }
 * { box-sizing: border-box; }
-html { background: var(--paper); }
-body { margin: 0; background: var(--paper); color: var(--ink); font: 400 18px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
-a { color: var(--link); text-decoration: underline; text-underline-offset: 2px; }
-a:visited { color: var(--visited); }
-a:focus-visible, .button:focus-visible { outline: 3px solid var(--brass); outline-offset: 3px; }
-svg { display: block; max-width: 100%; height: auto; }
+html { background: var(--wood-dark); }
+body { margin: 0; color: var(--ink); font: 400 18px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; background: var(--wood-dark); }
+svg { display: block; }
+a:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
+.stage { max-width: 1480px; margin: 0 auto; box-shadow: 0 0 60px rgba(0,0,0,.6);
+  background-color: var(--wood);
+  background-image: repeating-linear-gradient(90deg, rgba(0,0,0,.10) 0 2px, transparent 2px 9px, rgba(255,200,140,.05) 9px 11px, transparent 11px 23px), linear-gradient(180deg, #54291a, #3b1c10); }
 
-.strip { background: var(--navy); color: #fff; border-bottom: 3px solid var(--brass); }
-.strip div { max-width: 1120px; margin: 0 auto; padding: 9px 24px; display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 20px; font: 400 13px var(--font-serif); letter-spacing: .14em; text-transform: uppercase; }
-.strip a, .strip a:visited { color: #fff; }
+/* ---- sky ---- */
+.sky { position: relative; overflow: hidden; min-height: clamp(330px, 33vw, 470px); display: flex; flex-direction: column; border-bottom: 6px solid var(--wood-dark); }
+.sky > svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+.nav { position: relative; z-index: 2; display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 6px 26px; padding: 8px 20px; background: rgba(22, 20, 74, .9); border-bottom: 2px solid var(--gold); font: 400 18px var(--font-serif); color: var(--cream); }
+.nav .who { padding-right: 26px; border-right: 1px solid rgba(246,220,146,.6); font-size: 20px; }
+.nav a { color: var(--cream); text-decoration: none; padding: 3px 16px; border-radius: 8px; border: 1.5px solid transparent; }
+.nav a:hover { border-color: var(--gold); }
+.nav a[aria-current] { background: var(--wine); border-color: var(--gold); }
+.nav svg { width: 250px; height: 22px; }
+.title { position: relative; z-index: 2; flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: 56px 20px 44px; text-align: center; }
+h1 { margin: 0; font: 400 clamp(54px, 8vw, 112px)/1 var(--font-display); color: var(--cream); text-shadow: 0 3px 0 #2a1d5e, 0 0 26px rgba(246,220,146,.55); text-wrap: balance; }
+.ribbon { position: relative; margin: 0; max-width: min(92%, 760px); padding: 9px 34px; font: italic 400 clamp(17px, 1.9vw, 22px)/1.35 var(--font-serif); color: var(--ink); background: linear-gradient(#fff8e6, #f1e2bd); box-shadow: 0 3px 8px rgba(0,0,0,.35); border-top: 1px solid #fff; border-bottom: 1px solid #b9a06a; }
+.ribbon::before, .ribbon::after { content: ""; position: absolute; top: 9px; width: 46px; height: 100%; background: linear-gradient(#e6d3a4, #cdb67e); z-index: -1; }
+.ribbon::before { left: -30px; clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 34% 50%); }
+.ribbon::after { right: -30px; clip-path: polygon(0 0, 100% 0, 66% 50%, 100% 100%, 0 100%); }
 
-.wrap { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+/* ---- room ---- */
+.room { display: grid; grid-template-columns: 220px minmax(0, 1fr) 220px; }
+.shelves { display: flex; flex-direction: column; background: linear-gradient(90deg, #2a130a, #3a1b0f 30%, #33170c); border-inline: 6px solid var(--wood-dark); position: relative; }
+.shelf { flex: 1; min-height: 150px; display: flex; align-items: flex-end; justify-content: center; gap: 2px; padding: 16px 10px 0; border-bottom: 12px solid var(--wood-light); box-shadow: inset 0 14px 18px rgba(0,0,0,.45), 0 3px 0 var(--wood-dark); }
+.book { flex: none; border-radius: 2px 2px 0 0; background-image: linear-gradient(90deg, rgba(0,0,0,.28), rgba(255,255,255,.14) 35%, rgba(0,0,0,.22)), linear-gradient(transparent 12%, var(--gold) 12% 15%, transparent 15% 80%, var(--gold) 80% 83%, transparent 83%); }
+.shelf svg { flex: none; margin: 0 5px; }
+.vine { position: absolute; top: -30px; width: 120px; height: 264px; z-index: 3; pointer-events: none; }
+.shelves.left .vine { right: -78px; } .shelves.right .vine { left: -78px; transform: scaleX(-1); }
 
-.hero { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 16px 40px; align-items: center; padding: clamp(28px, 6vw, 64px) 0 24px; }
-.hero h1 { font: 400 clamp(52px, 8.4vw, 96px)/.98 var(--font-display); margin: 0 0 18px; letter-spacing: -.01em; text-wrap: balance; }
-.role { font: italic 400 22px var(--font-serif); color: var(--navy); margin: 0 0 14px; }
-.lede { margin: 0 0 26px; max-width: 34ch; color: var(--muted); font-size: 20px; }
-.plate { position: relative; margin: 0; }
-.plate::before { content: ""; position: absolute; inset: 0; z-index: 0;
-  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 26px 26px; -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent 100%); mask-image: radial-gradient(closest-side, #000 55%, transparent 100%); }
-.plate svg { position: relative; z-index: 1; width: 100%; }
-.plate figcaption, .cabinet figcaption, .placard figcaption { font: italic 400 14.5px/1.4 var(--font-serif); color: var(--muted); }
-.plate figcaption { text-align: center; margin-top: 2px; }
-figcaption b { font-style: normal; font-weight: 700; color: var(--ink); letter-spacing: .04em; }
-.lbl { font: italic 400 15px var(--font-serif); fill: var(--ink); }
-.leader { stroke: var(--ink); stroke-width: 1; fill: none; }
+.wall { position: relative; padding: 48px clamp(16px, 3.4vw, 48px) 44px; border-top: 10px solid var(--wood-light); box-shadow: inset 0 10px 14px rgba(0,0,0,.35); display: flex; flex-direction: column; justify-content: center; }
+h2 { position: absolute; top: -29px; left: 50%; transform: translateX(-50%); margin: 0; padding: 8px 30px; white-space: nowrap; font: 700 20px var(--font-serif); letter-spacing: .3em; text-transform: uppercase; color: var(--gold-light); background: linear-gradient(var(--wine), var(--wine-dark)); border: 2px solid var(--gold); border-radius: 10px; box-shadow: 0 0 0 3px var(--wine-dark), 0 4px 10px rgba(0,0,0,.5); z-index: 4; }
+h2::before, h2::after { content: "\2726"; margin: 0 14px; letter-spacing: 0; color: var(--gold); }
 
-.button { display: inline-block; padding: 10px 20px; font: 600 17px var(--font-body); color: var(--navy); text-decoration: none; cursor: pointer;
-  background: linear-gradient(#f6f4ec, #dedacd); border: 2px solid; border-color: #ffffff #8f8b80 #8f8b80 #ffffff; outline: 1px solid var(--ink); }
-.button:visited { color: var(--navy); }
-.button:hover { background: linear-gradient(#fffdf5, #e8e4d6); }
-.button:active { border-color: #8f8b80 #ffffff #ffffff #8f8b80; padding: 11px 19px 9px 21px; }
+.cardwrap { filter: drop-shadow(0 8px 14px rgba(0,0,0,.55)); }
+.card { --notch: 22px; position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 20px 40px; align-items: center; padding: 34px 40px; background: radial-gradient(120% 90% at 30% 20%, #fff7e3, var(--parchment) 55%, var(--parchment-2));
+  -webkit-mask: radial-gradient(var(--notch) at 0 0, #0000 98%, #000) top left, radial-gradient(var(--notch) at 100% 0, #0000 98%, #000) top right, radial-gradient(var(--notch) at 0 100%, #0000 98%, #000) bottom left, radial-gradient(var(--notch) at 100% 100%, #0000 98%, #000) bottom right;
+  mask: radial-gradient(var(--notch) at 0 0, #0000 98%, #000) top left, radial-gradient(var(--notch) at 100% 0, #0000 98%, #000) top right, radial-gradient(var(--notch) at 0 100%, #0000 98%, #000) bottom left, radial-gradient(var(--notch) at 100% 100%, #0000 98%, #000) bottom right;
+  -webkit-mask-size: 51% 51%; mask-size: 51% 51%; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; }
+.card::before { content: ""; position: absolute; inset: 12px; border: 1.5px solid var(--gold-dark); border-radius: 18px; opacity: .55; pointer-events: none; }
+.card .art { width: 100%; height: auto; border: 3px solid var(--gold-dark); }
+.card .corner { position: absolute; top: 16px; right: 20px; width: 96px; height: 70px; opacity: .55; pointer-events: none; }
+.card .text { position: relative; }
+h3 { margin: 0 0 12px; font: 400 clamp(38px, 4.2vw, 54px)/1.05 var(--font-display); }
+h3 a { color: var(--ink); text-decoration: none; }
+h3 a:hover { text-decoration: underline; }
+.card p { margin: 0 0 22px; max-width: 58ch; }
+.card p a { color: var(--wine); font-style: italic; text-underline-offset: 2px; }
+.button { display: inline-block; padding: 10px 28px; font: 400 21px var(--font-serif); color: var(--cream); text-decoration: none; background: linear-gradient(var(--wine), var(--wine-dark)); border: 2px solid var(--gold); border-radius: 10px; box-shadow: 0 0 0 2px var(--wine-dark), 0 3px 6px rgba(0,0,0,.35); }
+.button:hover { background: linear-gradient(#85264a, var(--wine)); }
+.button:active { transform: translateY(1px); }
+.card .smallscreen { display: none; margin: 14px 0 0; font-size: 15px; color: var(--ink-soft); }
 
-.divider { display: flex; align-items: center; gap: 14px; margin: 26px 0; color: var(--brass); }
-.divider::before, .divider::after { content: ""; flex: 1; height: 5px; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
-.divider svg { width: 16px; height: 16px; flex: none; }
+/* ---- desk ---- */
+.desk { position: relative; border-top: 8px solid var(--wood-dark); background: linear-gradient(#2b130a 0, #3c1c10 70%, #9a5a30 70%, #6b3a1f 84%, #4a2415 100%); }
+.desk svg { width: 100%; height: auto; }
+footer { padding: 12px 24px 18px; text-align: center; font: 400 14px var(--font-serif); color: #d9bf9a; background: var(--wood-dark); }
 
-h2 { font: 400 13px var(--font-serif); letter-spacing: .2em; text-transform: uppercase; color: var(--navy); margin: 0 0 16px; }
+/* ---- motion ---- */
+.twinkle { animation: twinkle 4s ease-in-out infinite; }
+@keyframes twinkle { 0%, 100% { opacity: 1; } 50% { opacity: .3; } }
+.drift { animation: drift 16s ease-in-out infinite alternate; }
+@keyframes drift { to { transform: translateX(14px); } }
+.spin { transform-box: fill-box; transform-origin: center; animation: spin 140s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.bob { animation: bob 5s ease-in-out infinite; }
+@keyframes bob { 50% { transform: translateY(-3px); } }
 
-.placard { border: 1px solid var(--ink); background: var(--paper); box-shadow: 6px 6px 0 var(--grid); }
-.placard-bar { display: flex; justify-content: space-between; gap: 12px; background: var(--navy); color: #fff; padding: 7px 16px; font: 400 13px var(--font-serif); letter-spacing: .14em; text-transform: uppercase; }
-.placard-body { display: grid; grid-template-columns: minmax(0, 7fr) minmax(0, 5fr); gap: 20px 36px; align-items: center; padding: 26px 28px 28px; }
-.placard h3 { font: 400 44px/1.05 var(--font-display); margin: 0 0 12px; }
-.placard h3 a, .placard h3 a:visited { color: var(--ink); text-decoration: none; }
-.placard h3 a:hover { text-decoration: underline; }
-.placard p { margin: 0 0 20px; max-width: 60ch; }
-.placard figure { margin: 0; }
-.placard figcaption { margin-top: 6px; text-align: center; }
-.placard .smallscreen { display: none; margin: 14px 0 0; font-size: 15px; color: var(--muted); }
-
-.cabinet { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px 28px; }
-.cabinet figure { margin: 0; }
-.cabinet svg { width: 100%; }
-.cabinet figcaption { border-top: 1px solid var(--rule); padding-top: 8px; margin-top: 2px; }
-
-.float { animation: float 7s ease-in-out infinite; }
-.cabinet li:nth-child(2) .float { animation-delay: -1.8s; }
-.cabinet li:nth-child(3) .float { animation-delay: -3.6s; }
-.cabinet li:nth-child(4) .float { animation-delay: -5.2s; }
-@keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
-.sway { transform-box: fill-box; transform-origin: 50% 100%; animation: sway 9s ease-in-out infinite; }
-@keyframes sway { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(-3deg); } }
-.spin { transform-box: fill-box; transform-origin: center; animation: spin 90s linear infinite; }
-@keyframes spin { to { transform: rotate(-360deg); } }
-
-footer { margin: 40px 0 0; padding: 18px 0 40px; border-top: 1px solid var(--rule); font: 400 14px var(--font-serif); color: var(--muted); }
-
-@media (max-width: 860px) {
-  .hero { grid-template-columns: minmax(0, 1fr); }
-  .plate { max-width: 520px; margin: 0 auto; }
-  .placard-body { grid-template-columns: minmax(0, 1fr); padding: 20px 18px 22px; }
-  .placard figure { max-width: 380px; margin: 0 auto; }
-  .placard h3 { font-size: 38px; }
-  .cabinet { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 1100px) { .room { grid-template-columns: minmax(0, 1fr); } .shelves { display: none; } }
+@media (max-width: 760px) {
+  .nav svg, .nav .who { display: none; }
+  .card { grid-template-columns: minmax(0, 1fr); padding: 28px 24px; }
+  .card .art { max-width: 320px; margin: 0 auto; } .card .corner { display: none; }
+  .card .smallscreen { display: block; }
+  .ribbon { padding-inline: 18px; } .ribbon::before, .ribbon::after { display: none; }
+  h2 { font-size: 17px; padding-inline: 14px; }
 }
-@media (max-width: 760px) { .placard .smallscreen { display: block; } }
-@media (prefers-reduced-motion: reduce) { .float, .sway, .spin { animation: none; } .sway { transform: rotate(-5deg); } }
+@media (prefers-reduced-motion: reduce) { .twinkle, .drift, .spin, .bob { animation: none; } }
 </style>
 </head>
 <body>
-<div class="strip"><div><span>Brian Duffy</span><a href="#projects">Projects</a></div></div>
-
-<div class="wrap">
-  <header class="hero">
-    <div>
+<div class="stage">
+  <header class="sky">
+    <svg viewBox="0 0 1400 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs>
+        <linearGradient id="g-sky" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="0" y2="440"><stop offset="0" stop-color="#17154f"/><stop offset=".45" stop-color="#2c2b86"/><stop offset=".8" stop-color="#5c5db8"/><stop offset="1" stop-color="#9a97d8"/></linearGradient>
+        <radialGradient id="g-moon" cx="38%" cy="35%" r="75%"><stop offset="0" stop-color="#fbf6e6"/><stop offset=".7" stop-color="#cfc9bd"/><stop offset="1" stop-color="#8f8a8f"/></radialGradient>
+        <linearGradient id="g-saturn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f3dcb0"/><stop offset=".35" stop-color="#d9a877"/><stop offset=".5" stop-color="#f0d3a2"/><stop offset=".7" stop-color="#c58e62"/><stop offset="1" stop-color="#8f6249"/></linearGradient>
+        <radialGradient id="g-cloud" cx="45%" cy="25%" r="85%"><stop offset="0" stop-color="#fffaf0"/><stop offset=".55" stop-color="#f6d9cf"/><stop offset="1" stop-color="#b6a4d8"/></radialGradient>
+        <radialGradient id="g-glow"><stop offset="0" stop-color="#f6dc92" stop-opacity=".7"/><stop offset="1" stop-color="#f6dc92" stop-opacity="0"/></radialGradient>
+        <pattern id="p-tile" width="34" height="34" patternUnits="userSpaceOnUse"><rect width="34" height="34" fill="#16345a"/><circle cx="17" cy="17" r="6" fill="none" stroke="#d9a441" stroke-width="1.4"/><circle cx="17" cy="17" r="2" fill="#b3344a"/><circle cx="0" cy="0" r="3" fill="#d9a441"/><circle cx="34" cy="0" r="3" fill="#d9a441"/><circle cx="0" cy="34" r="3" fill="#d9a441"/><circle cx="34" cy="34" r="3" fill="#d9a441"/></pattern>
+      </defs>
+      <rect width="1400" height="440" fill="url(#p-tile)"/>
+      <g fill="none">
+        <circle cx="700" cy="1000" r="1012" stroke="#8f2434" stroke-width="16"/>
+        <circle cx="700" cy="1000" r="1000" stroke="#f6dc92" stroke-width="4"/>
+        <circle cx="700" cy="1000" r="986" stroke="#2f4aa0" stroke-width="20"/>
+        <circle cx="700" cy="1000" r="986" stroke="#f6dc92" stroke-width="3" stroke-dasharray="2 22" stroke-linecap="round"/>
+      </g>
+      <circle cx="700" cy="1000" r="976" fill="url(#g-sky)" stroke="#d9a441" stroke-width="4"/>
+      <g fill="none" stroke="#f6dc92" opacity=".4"><circle cx="700" cy="1000" r="900" stroke-width="2"/><circle cx="700" cy="1000" r="884" stroke-width="1"/><circle cx="700" cy="760" r="560" stroke-width="1.5"/></g>
+      <g fill="none" stroke-width="10" opacity=".5" id="rainbow"></g>
+      <circle cx="700" cy="110" r="150" fill="url(#g-glow)"/>
+      <g id="burst" stroke="#f6dc92" stroke-linecap="round"></g>
+      <g id="consts" fill="#fbf3df" stroke="#fbf3df" stroke-width="1" opacity=".75"></g>
+      <g id="stars" fill="#f6dc92"></g>
+      <g class="bob"><circle cx="300" cy="150" r="50" fill="url(#g-moon)"/><g fill="#9d9896" opacity=".5"><circle cx="282" cy="136" r="9"/><circle cx="318" cy="162" r="12"/><circle cx="300" cy="182" r="6"/><circle cx="326" cy="128" r="5"/><circle cx="270" cy="166" r="5"/></g></g>
+      <g class="bob" style="animation-delay:-2.5s"><g transform="rotate(-18 1150 150)"><ellipse cx="1150" cy="150" rx="66" ry="15" fill="none" stroke="#e8cfa0" stroke-width="7"/><circle cx="1150" cy="150" r="33" fill="url(#g-saturn)"/><path d="M1084 150 A66 15 0 0 0 1216 150" fill="none" stroke="#f3dcb0" stroke-width="7"/><path d="M1084 150 A66 15 0 0 0 1216 150" fill="none" stroke="#8f6249" stroke-width="1.5"/></g></g>
+      <g id="clouds" fill="url(#g-cloud)"></g>
+    </svg>
+    <nav class="nav" aria-label="Main">
+      <span class="who">Brian Duffy</span>
+      <a href="/" aria-current="page">Home</a>
+      <a href="#projects">Projects</a>
+      <svg viewBox="0 0 250 22" aria-hidden="true" id="phases"></svg>
+    </nav>
+    <div class="title">
       <h1>Brian Duffy</h1>
-      <p class="role">Product Manager</p>
-      <p class="lede">This is where I put the things I design and build.</p>
-      <a class="button" href="#projects">See the projects</a>
+      <p class="ribbon">Product Manager. This is where I put the things I design and build.</p>
     </div>
-    <figure class="plate">
-      <svg id="armillary" viewBox="0 0 560 520" role="img" aria-label="A brass armillary sphere on a stand, slowly turning, with its meridian ring, horizon ring and polar axis labelled.">
-        <defs>
-          <radialGradient id="g-earth" cx="35%" cy="30%" r="75%"><stop offset="0" stop-color="#8fc1ee"/><stop offset=".6" stop-color="#2f6fb8"/><stop offset="1" stop-color="#173a78"/></radialGradient>
-          <linearGradient id="g-brass" x1="0" x2="1"><stop offset="0" stop-color="#7d5a14"/><stop offset=".35" stop-color="#edd28a"/><stop offset=".6" stop-color="#b8892b"/><stop offset="1" stop-color="#6b4c10"/></linearGradient>
-          <radialGradient id="g-shadow"><stop offset="0" stop-color="#14183a" stop-opacity=".28"/><stop offset="1" stop-color="#14183a" stop-opacity="0"/></radialGradient>
-        </defs>
-        <ellipse cx="280" cy="488" rx="150" ry="16" fill="url(#g-shadow)"/>
-        <g id="arm-back"></g>
-        <rect x="273" y="392" width="14" height="72" fill="url(#g-brass)"/>
-        <ellipse cx="280" cy="432" rx="15" ry="7" fill="url(#g-brass)" stroke="#6b4c10" stroke-width=".8"/>
-        <path d="M222 478 Q280 448 338 478 L338 484 Q280 494 222 484 Z" fill="url(#g-brass)" stroke="#6b4c10" stroke-width=".8"/>
-        <circle id="arm-earth" cx="280" cy="240" r="17" fill="url(#g-earth)"/>
-        <g id="arm-front"></g>
-        <g>
-          <path class="leader" d="M280 88 L280 52 L330 52"/><circle cx="280" cy="88" r="2.5" fill="#14183a"/><text class="lbl" x="336" y="57">Meridian ring</text>
-          <path class="leader" d="M432 264 L500 264"/><circle cx="432" cy="264" r="2.5" fill="#14183a"/><text class="lbl" x="452" y="286">Horizon ring</text>
-          <path class="leader" d="M352 171 L420 130 L452 130"/><circle cx="352" cy="171" r="2.5" fill="#14183a"/><text class="lbl" x="458" y="135">Polar axis</text>
-          <path class="leader" d="M268 246 L96 330 L64 330"/><circle cx="268" cy="246" r="2.5" fill="#14183a"/><text class="lbl" x="20" y="335" >Earth</text>
-        </g>
-      </svg>
-      <figcaption><b>PLATE I.</b> An armillary sphere, a model of the sky with the observer at the centre.</figcaption>
-    </figure>
   </header>
 
-  <div class="divider" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 0 L16 8 L8 16 L0 8 Z" fill="currentColor"/></svg></div>
+  <div class="room">
+    <aside class="shelves left" aria-hidden="true"><svg class="vine" viewBox="0 0 150 330"></svg></aside>
 
-  <section id="projects" aria-labelledby="projects-title">
-    <h2 id="projects-title">Projects</h2>
-    <article class="placard">
-      <div class="placard-bar"><span>Exhibit No. 1</span><span>Astronomy</span></div>
-      <div class="placard-body">
-        <div>
+    <main class="wall" id="projects">
+      <h2>Projects</h2>
+      <div class="cardwrap"><article class="card">
+        <svg class="corner" viewBox="0 0 150 110" aria-hidden="true" id="corner"></svg>
+        <svg class="art" viewBox="0 0 400 400" role="img" aria-label="A golden armillary sphere turning inside a ring of zodiac signs, against a night sky.">
+          <rect width="400" height="400" fill="#211f6b"/>
+          <g id="art-stars" fill="#f6dc92"></g>
+          <g class="spin"><circle cx="200" cy="188" r="176" fill="none" stroke="#d9a441" stroke-width="3"/><circle cx="200" cy="188" r="138" fill="none" stroke="#d9a441" stroke-width="2"/><g id="zodiac" stroke="#d9a441" stroke-width="1.5" fill="#f6dc92"></g></g>
+          <circle cx="200" cy="188" r="124" fill="#17154f" opacity=".5"/>
+          <g id="card-back"></g>
+          <g id="sun" stroke="#f6dc92" stroke-linecap="round"></g>
+          <g id="card-front"></g>
+          <rect x="194" y="282" width="12" height="52" fill="#b8892b" stroke="#6b4c10" stroke-width=".8"/>
+          <path d="M150 352 Q200 318 250 352 L256 362 L144 362 Z" fill="#d9a441" stroke="#6b4c10" stroke-width="1"/>
+          <g id="art-clouds" fill="url(#g-cloud)"></g>
+        </svg>
+        <div class="text">
           <h3><a href="/spherechart/">Spherechart</a></h3>
           <p>I've been studying <a href="https://www.instagram.com/brianduffygram/">Tarot as a healing art</a> for 15 years. The history of Tarot and Astrology are deeply intertwined, but I always had trouble getting started with learning Astrology, because I couldn't clearly visualize how it worked. I collaborated with Claude using Fable 5.2 to build a tool for understanding how exactly astrological charts are depicting what we see when we look up at the sky.</p>
           <a class="button" href="/spherechart/">Open Spherechart &rarr;</a>
           <p class="smallscreen">Best viewed on a laptop or desktop.</p>
         </div>
-        <figure>
-          <svg viewBox="0 0 380 204" role="img" aria-label="Diagram: the dome of the sky above a horizon on the left, flattened into a round chart wheel on the right.">
-            <g fill="none" stroke-linecap="round">
-              <path d="M22 118 A78 78 0 0 1 178 118" stroke="#1b2a6b" stroke-width="1.6"/>
-              <ellipse cx="100" cy="118" rx="78" ry="17" stroke="#1f8a80" stroke-width="2.4"/>
-              <path d="M30 128 Q96 6 172 106" stroke="#b8892b" stroke-width="3"/>
-              <path d="M100 118 L100 40" stroke="#14183a" stroke-width="1" stroke-dasharray="3 4"/>
-              <path d="M192 104 L228 104 M219 96 L229 104 L219 112" stroke="#14183a" stroke-width="1.6"/>
-              <circle cx="302" cy="104" r="70" stroke="#b8892b" stroke-width="3"/>
-              <circle cx="302" cy="104" r="55" stroke="#b8892b" stroke-width="1.2"/>
-              <g class="spin" stroke="#b8892b" stroke-width="1.2"><path d="M302 34 V49 M302 159 V174 M232 104 H247 M357 104 H372 M267 43.4 L274.5 56.4 M329.5 151.6 L337 164.6 M241.4 69 L254.4 76.5 M349.6 131.5 L362.6 139 M241.4 139 L254.4 131.5 M349.6 76.5 L362.6 69 M267 164.6 L274.5 151.6 M329.5 56.4 L337 43.4"/><circle cx="302" cy="104" r="70" stroke="none"/></g>
-              <circle cx="302" cy="104" r="20" stroke="#1b2a6b" stroke-width="1"/>
-              <path d="M226 104 H378" stroke="#1f8a80" stroke-width="2.4"/>
-            </g>
-            <circle cx="100" cy="118" r="3.2" fill="#14183a"/><circle cx="302" cy="104" r="3.2" fill="#14183a"/>
-            <circle cx="132" cy="52" r="5" fill="#e0a92e" stroke="#7d5a14" stroke-width=".8"/><circle cx="343" cy="70" r="5" fill="#e0a92e" stroke="#7d5a14" stroke-width=".8"/>
-            <text class="lbl" x="100" y="198" text-anchor="middle" font-size="13">the sky</text><text class="lbl" x="302" y="198" text-anchor="middle" font-size="13">the chart</text>
-          </svg>
-          <figcaption><b>FIG. 1.</b> The horizon becomes the line across the chart.</figcaption>
-        </figure>
-      </div>
-    </article>
-  </section>
+      </article></div>
+    </main>
 
-  <div class="divider" aria-hidden="true"><svg viewBox="0 0 16 16"><path d="M8 0 L16 8 L8 16 L0 8 Z" fill="currentColor"/></svg></div>
+    <aside class="shelves right" aria-hidden="true"><svg class="vine" viewBox="0 0 150 330"></svg></aside>
+  </div>
 
-  <section aria-labelledby="cabinet-title">
-    <h2 id="cabinet-title">From the cabinet</h2>
-    <ul class="cabinet">
-      <li><figure>
-        <svg viewBox="0 0 220 200" role="img" aria-label="A glass prism splitting a beam of white light into a spectrum.">
-          <defs><linearGradient id="g-glass" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#f4fbff"/><stop offset=".5" stop-color="#bfdcf2"/><stop offset="1" stop-color="#7fa9d6"/></linearGradient></defs>
-          <ellipse cx="110" cy="176" rx="64" ry="8" fill="url(#g-shadow)"/>
-          <g class="float">
-            <path d="M6 122 L94 100" stroke="#14183a" stroke-width="5"/><path d="M6 122 L94 100" stroke="#ffffff" stroke-width="3"/>
-            <g opacity=".92"><path d="M124 96 L214 84 L214 94 Z" fill="#d8322f"/><path d="M124 96 L214 94 L214 104 Z" fill="#ee8a1f"/><path d="M124 96 L214 104 L214 114 Z" fill="#f1d21c"/><path d="M124 96 L214 114 L214 124 Z" fill="#3aa655"/><path d="M124 96 L214 124 L214 134 Z" fill="#2c6fd0"/><path d="M124 96 L214 134 L214 144 Z" fill="#6b3fb0"/></g>
-            <path d="M110 40 L164 150 L56 150 Z" fill="url(#g-glass)" stroke="#3a5f96" stroke-width="1.6" stroke-linejoin="round" fill-opacity=".9"/>
-            <path d="M110 52 L74 142" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".8"/>
-          </g>
-        </svg>
-        <figcaption><b>FIG. 2.</b> Prism. One beam of white light, fanned out into its colours.</figcaption>
-      </figure></li>
-      <li><figure>
-        <svg viewBox="0 0 220 200" role="img" aria-label="A nautilus shell cut in half, showing its spiral of chambers.">
-          <defs><radialGradient id="g-shell" cx="55%" cy="45%" r="70%"><stop offset="0" stop-color="#fff6e3"/><stop offset=".7" stop-color="#f1cfa0"/><stop offset="1" stop-color="#cf8e52"/></radialGradient></defs>
-          <ellipse cx="110" cy="178" rx="70" ry="8" fill="url(#g-shadow)"/>
-          <g class="float" id="shell"></g>
-        </svg>
-        <figcaption><b>FIG. 3.</b> Nautilus. Each chamber is the last one, grown a little larger.</figcaption>
-      </figure></li>
-      <li><figure>
-        <svg viewBox="0 0 220 200" role="img" aria-label="A Tarot card showing one large star and seven small ones.">
-          <ellipse cx="112" cy="180" rx="56" ry="7" fill="url(#g-shadow)"/>
-          <g class="float"><g class="sway">
-            <rect x="62" y="22" width="96" height="150" rx="7" fill="#fbf6e6" stroke="#14183a" stroke-width="1.6"/>
-            <rect x="69" y="29" width="82" height="136" rx="3" fill="#1b2a6b"/>
-            <rect x="69" y="29" width="82" height="136" rx="3" fill="none" stroke="#b8892b" stroke-width="1.6"/>
-            <path id="bigstar" fill="#f2c94c" stroke="#7d5a14" stroke-width=".8"/>
-            <g id="smallstars" fill="#fbf6e6"></g>
-            <rect x="78" y="141" width="64" height="16" fill="#fbf6e6" stroke="#b8892b" stroke-width="1"/>
-            <text x="110" y="153" text-anchor="middle" font-family="'Libre Caslon Text', Georgia, serif" font-size="9.5" letter-spacing="1.6" fill="#14183a">THE STAR</text>
-            <text x="110" y="44" text-anchor="middle" font-family="'Libre Caslon Text', Georgia, serif" font-size="9" letter-spacing="1" fill="#edd28a">XVII</text>
-          </g></g>
-        </svg>
-        <figcaption><b>FIG. 4.</b> Tarot card. A picture made to be read, not just looked at.</figcaption>
-      </figure></li>
-      <li><figure>
-        <svg viewBox="0 0 220 200" role="img" aria-label="A zoetrope, a slotted drum on a stand, slowly spinning.">
-          <defs><linearGradient id="g-drum" x1="0" x2="1"><stop offset="0" stop-color="#0d1330"/><stop offset=".3" stop-color="#34447e"/><stop offset=".55" stop-color="#1b2a6b"/><stop offset="1" stop-color="#0a0f28"/></linearGradient></defs>
-          <ellipse cx="110" cy="180" rx="60" ry="8" fill="url(#g-shadow)"/>
-          <g class="float">
-            <rect x="105" y="118" width="10" height="46" fill="url(#g-brass)"/>
-            <path d="M74 172 Q110 154 146 172 L146 176 Q110 182 74 176 Z" fill="url(#g-brass)" stroke="#6b4c10" stroke-width=".8"/>
-            <ellipse cx="110" cy="52" rx="62" ry="14" fill="#f7f1df" stroke="#0d1330" stroke-width="1.4"/>
-            <path d="M48 52 V110 A62 14 0 0 0 172 110 V52 A62 14 0 0 1 48 52 Z" fill="url(#g-drum)" stroke="#0d1330" stroke-width="1.4"/>
-            <g id="slits" fill="#f7f1df"></g>
-            <path d="M48 104 A62 14 0 0 0 172 104" fill="none" stroke="#b8892b" stroke-width="2"/>
-          </g>
-        </svg>
-        <figcaption><b>FIG. 5.</b> Zoetrope. Still drawings, turned into motion by a spinning drum.</figcaption>
-      </figure></li>
-    </ul>
-  </section>
-
+  <div class="desk" aria-hidden="true">
+    <svg viewBox="0 0 1400 250">
+      <defs>
+        <linearGradient id="g-brass2" x1="0" x2="1"><stop offset="0" stop-color="#7d5a14"/><stop offset=".4" stop-color="#f6dc92"/><stop offset=".7" stop-color="#b8892b"/><stop offset="1" stop-color="#6b4c10"/></linearGradient>
+        <linearGradient id="g-beige" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#efe7d2"/><stop offset="1" stop-color="#c9bfa6"/></linearGradient>
+        <radialGradient id="g-lamp" cx="50%" cy="100%" r="90%"><stop offset="0" stop-color="#fff6c9"/><stop offset=".6" stop-color="#f3cf86"/><stop offset="1" stop-color="#c98f4a"/></radialGradient>
+        <radialGradient id="g-lampglow"><stop offset="0" stop-color="#ffe9a8" stop-opacity=".55"/><stop offset="1" stop-color="#ffe9a8" stop-opacity="0"/></radialGradient>
+      </defs>
+      <g>
+        <rect x="70" y="24" width="210" height="150" rx="14" fill="url(#g-beige)" stroke="#8d8570" stroke-width="2"/>
+        <rect x="92" y="42" width="166" height="108" rx="10" fill="#2a2470" stroke="#6f6850" stroke-width="3"/>
+        <g class="bob"><g transform="rotate(-15 175 96)"><ellipse cx="175" cy="96" rx="52" ry="10" fill="none" stroke="#f0a9c8" stroke-width="5"/><circle cx="175" cy="96" r="24" fill="#8f7fe0"/><path d="M123 96 A52 10 0 0 0 227 96" fill="none" stroke="#ffd0e2" stroke-width="5"/></g></g>
+        <g fill="#f6dc92"><circle cx="112" cy="60" r="2"/><circle cx="236" cy="70" r="2.4"/><circle cx="226" cy="132" r="1.8"/><circle cx="120" cy="128" r="2"/><circle cx="150" cy="54" r="1.4"/></g>
+        <rect x="130" y="174" width="90" height="14" fill="#c9bfa6" stroke="#8d8570" stroke-width="1.5"/>
+        <rect x="56" y="186" width="250" height="34" rx="5" fill="url(#g-beige)" stroke="#8d8570" stroke-width="2"/>
+        <rect x="200" y="196" width="80" height="6" rx="2" fill="#6f6850"/><circle cx="84" cy="203" r="4" fill="#4caf50"/>
+        <path d="M250 222 L430 222 L452 246 L228 246 Z" fill="url(#g-beige)" stroke="#8d8570" stroke-width="2"/>
+        <path d="M246 228 H436 M241 234 H441 M236 240 H447" stroke="#8d8570" stroke-width="1"/>
+        <ellipse cx="490" cy="238" rx="20" ry="9" fill="#efe7d2" stroke="#8d8570" stroke-width="2"/>
+      </g>
+      <g stroke="#2c140b" stroke-width="1.5">
+        <rect x="560" y="200" width="210" height="44" rx="4" fill="#6f1d3a"/><rect x="560" y="208" width="210" height="4" fill="#d9a441" stroke="none"/><rect x="560" y="232" width="210" height="4" fill="#d9a441" stroke="none"/>
+        <rect x="584" y="164" width="170" height="36" rx="4" fill="#1f5a50"/><rect x="584" y="172" width="170" height="3" fill="#d9a441" stroke="none"/>
+        <circle cx="665" cy="222" r="9" fill="#d9a441" stroke="none"/>
+      </g>
+      <path d="M800 214 L1020 196 L1060 240 L820 248 Z" fill="#f7ebd1" stroke="#b9a06a" stroke-width="1.5"/>
+      <g fill="none"><ellipse cx="935" cy="222" rx="92" ry="19" fill="#2c2b86" stroke="#d9a441" stroke-width="2"/><ellipse cx="935" cy="222" rx="60" ry="12" stroke="#f6dc92" stroke-width="1"/><path d="M843 222 H1027 M935 203 V241 M870 208 L1000 236 M870 236 L1000 208" stroke="#f6dc92" stroke-width=".8"/></g>
+      <g><path d="M772 244 L812 226" stroke="#6b4c10" stroke-width="9" stroke-linecap="round"/><ellipse cx="832" cy="218" rx="24" ry="17" fill="#cfe6f5" fill-opacity=".55" stroke="#b8892b" stroke-width="6"/></g>
+      <g>
+        <path d="M1128 160 L1096 246 M1128 160 L1160 246 M1128 160 L1128 246" stroke="#b8892b" stroke-width="7" stroke-linecap="round"/>
+        <g transform="rotate(-24 1128 150)"><rect x="1040" y="128" width="150" height="34" rx="6" fill="#1d1b3f" stroke="#0d0c24" stroke-width="1.5"/><rect x="1024" y="122" width="26" height="46" rx="5" fill="url(#g-brass2)" stroke="#6b4c10"/><rect x="1150" y="130" width="16" height="30" fill="url(#g-brass2)"/><rect x="1186" y="134" width="46" height="22" rx="4" fill="url(#g-brass2)" stroke="#6b4c10"/></g>
+        <circle cx="1128" cy="158" r="9" fill="url(#g-brass2)" stroke="#6b4c10"/>
+      </g>
+      <g>
+        <circle cx="1300" cy="120" r="120" fill="url(#g-lampglow)"/>
+        <rect x="1294" y="118" width="12" height="100" fill="url(#g-brass2)"/>
+        <path d="M1254 240 Q1300 204 1346 240 L1350 248 L1250 248 Z" fill="url(#g-brass2)" stroke="#6b4c10"/>
+        <path d="M1262 40 L1338 40 L1384 122 L1216 122 Z" fill="url(#g-lamp)" stroke="#8a6417" stroke-width="2.5" stroke-linejoin="round"/>
+        <path d="M1286 40 L1262 122 M1314 40 L1338 122 M1300 40 V122 M1240 80 H1360" stroke="#8a6417" stroke-width="2"/>
+        <circle cx="1300" cy="34" r="6" fill="url(#g-brass2)"/>
+      </g>
+    </svg>
+  </div>
   <footer>&copy; 2026 Brian Duffy</footer>
 </div>
 
 <script>
 (() => {
   'use strict';
-  const NS = 'http://www.w3.org/2000/svg', D = Math.PI / 180;
+  const NS = 'http://www.w3.org/2000/svg', D = Math.PI / 180, $ = id => document.getElementById(id);
   const el = (parent, tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); parent.appendChild(e); return e; };
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let seed = 7; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const sparkle = (x, y, r) => `M${x} ${y - r}Q${x} ${y} ${x + r} ${y}Q${x} ${y} ${x} ${y + r}Q${x} ${y} ${x - r} ${y}Q${x} ${y} ${x} ${y - r}Z`;
+  const cloud = (g, x, y, s) => { [[0, 0, 34], [34, -14, 40], [74, -4, 32], [104, 8, 24], [-30, 10, 24], [36, 14, 36], [70, 18, 30]].forEach(([dx, dy, r]) => el(g, 'circle', { cx: x + dx * s, cy: y + dy * s, r: r * s })); };
 
-  /* ---- Plate I: armillary sphere, drawn as 3D rings projected to the page ---- */
-  const CX = 280, CY = 240, YAW = 35 * D, TILT = 18 * D, EPS = 23.4 * D, LAT = 40 * D;
-  const cy_ = Math.cos(YAW), sy_ = Math.sin(YAW), ct = Math.cos(TILT), st = Math.sin(TILT);
-  const view = ([x, y, z]) => { const x1 = x * cy_ + z * sy_, z1 = -x * sy_ + z * cy_; return [CX + x1, CY - (y * ct - z1 * st), y * st + z1 * ct]; };
-  const add = (a, b, k) => [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k];
-  const mix = (a, ka, b, kb) => [a[0] * ka + b[0] * kb, a[1] * ka + b[1] * kb, a[2] * ka + b[2] * kb];
-  const AXIS = [0, Math.sin(LAT), Math.cos(LAT)], E1 = [1, 0, 0], E2 = [0, AXIS[2], -AXIS[1]];
-  const back = document.getElementById('arm-back'), front = document.getElementById('arm-front');
-  const mk = w => ({ b: el(back, 'path', { fill: 'none', stroke: '#c9a659', 'stroke-width': w * 0.8, 'stroke-linecap': 'round' }),
-    f: el(front, 'path', { fill: 'none', stroke: '#7d5a14', 'stroke-width': w, 'stroke-linecap': 'round' }),
-    h: el(front, 'path', { fill: 'none', stroke: '#edd28a', 'stroke-width': w * 0.38, 'stroke-linecap': 'round' }) });
-  const ringPaths = { axis: mk(3), col1: mk(3), col2: mk(3), tropN: mk(2.6), tropS: mk(2.6), equator: mk(4), ecliptic: mk(7), meridian: mk(7), horizon: mk(10) };
-  function drawRing(p, c, u, v, r) {
-    let f = '', b = '', lastFront = null, prev = null;
-    for (let i = 0; i <= 96; i++) {
-      const a = i / 96 * 2 * Math.PI, q = view(add(add(c, u, r * Math.cos(a)), v, r * Math.sin(a))), isFront = q[2] >= 0, pt = q[0].toFixed(1) + ' ' + q[1].toFixed(1);
-      if (prev !== null && isFront === lastFront) { if (isFront) f += 'L' + pt; else b += 'L' + pt; }
-      else { const start = prev === null ? pt : prev + 'L' + pt; if (isFront) f += 'M' + start; else b += 'M' + start; }
-      lastFront = isFront; prev = pt;
-    }
-    p.f.setAttribute('d', f); p.h.setAttribute('d', f); p.b.setAttribute('d', b);
+  /* sky: stars, starburst, constellations, rainbow, clouds */
+  for (let i = 0; i < 80; i++) { const x = Math.round(40 + rnd() * 1320), y = Math.round(50 + rnd() * 300), r = +(3 + rnd() * rnd() * 14).toFixed(1); if (Math.hypot(x - 700, y - 1000) > 940) continue;
+    const p = el($('stars'), 'path', { d: sparkle(x, y, r), opacity: (0.55 + rnd() * 0.45).toFixed(2) }); if (i % 3 === 0) { p.setAttribute('class', 'twinkle'); p.style.animationDelay = (-rnd() * 4).toFixed(1) + 's'; } }
+  for (let i = 0; i < 32; i++) { const a = i * 11.25 * D, L = i % 4 === 0 ? 96 : i % 2 === 0 ? 70 : 46; el($('burst'), 'path', { d: `M${700 + 18 * Math.cos(a)} ${104 + 18 * Math.sin(a)}L${700 + L * Math.cos(a)} ${104 + L * Math.sin(a)}`, 'stroke-width': i % 4 === 0 ? 2.4 : 1.2, opacity: .85 }); }
+  el($('burst'), 'path', { d: sparkle(700, 104, 30), fill: '#f6dc92', stroke: 'none' });
+  [[[420, 230], [455, 205], [500, 214], [520, 250], [488, 268]], [[1290, 110], [1320, 140], [1350, 128], [1372, 160]], [[880, 70], [915, 92], [950, 80]]].forEach(c => { el($('consts'), 'path', { d: 'M' + c.map(p => p.join(' ')).join('L'), fill: 'none' }); c.forEach(p => el($('consts'), 'circle', { cx: p[0], cy: p[1], r: 2.6, stroke: 'none' })); });
+  ['#e2483d', '#f08a2c', '#f3d13a', '#58b368', '#3f86d8', '#7a55c7'].forEach((c, i) => el($('rainbow'), 'path', { d: `M${640 + i * 10} 470 A${520 - i * 10} ${520 - i * 10} 0 0 1 1400 ${300 + i * 12}`, stroke: c }));
+  [[60, 400, 1.5], [230, 420, 1.2], [400, 430, .9], [-40, 330, 1.1], [1020, 430, 1], [1180, 410, 1.4], [1330, 380, 1.3], [560, 445, .7], [800, 448, .7]].forEach(([x, y, s], i) => { const g = el($('clouds'), 'g', { class: 'drift' }); g.style.animationDelay = (-i * 2.3) + 's'; cloud(g, x, y, s); });
+  /* moon phases in the nav */
+  const ph = $('phases'); el(ph, 'path', { d: 'M0 11 H34 M216 11 H250', stroke: '#f6dc92', 'stroke-width': 1.2 });
+  [-9, -5, -2, 0, 2, 5, 9].forEach((off, i) => { const x = 50 + i * 25, id = 'ph' + i, cp = el(ph, 'clipPath', { id }); el(cp, 'circle', { cx: x, cy: 11, r: 8 }); el(ph, 'circle', { cx: x, cy: 11, r: 8, fill: off === 0 ? '#fbf3df' : '#3a3a7c' }); if (off) el(ph, 'circle', { cx: x + off * 1.6, cy: 11, r: 8 + Math.abs(off) * .3, fill: '#fbf3df', 'clip-path': `url(#${id})` }); });
+
+  /* card art: stars, zodiac ring, sun, clouds, corner ornament */
+  for (let i = 0; i < 26; i++) el($('art-stars'), 'path', { d: sparkle(Math.round(rnd() * 400), Math.round(rnd() * 400), +(2 + rnd() * 7).toFixed(1)), opacity: .8 });
+  ['♈', '♉', '♊', '♋', '♌', '♍', '♎', '♏', '♐', '♑', '♒', '♓'].forEach((g, i) => { const a = (-90 + i * 30) * D, m = (-75 + i * 30) * D, tx = 200 + 157 * Math.cos(m), ty = 188 + 157 * Math.sin(m);
+    el($('zodiac'), 'path', { d: `M${200 + 138 * Math.cos(a)} ${188 + 138 * Math.sin(a)}L${200 + 176 * Math.cos(a)} ${188 + 176 * Math.sin(a)}` });
+    el($('zodiac'), 'text', { x: tx, y: ty + 8, 'text-anchor': 'middle', 'font-size': 24, stroke: 'none', 'font-family': "'Noto Sans Symbols','Segoe UI Symbol','Apple Symbols','DejaVu Sans',sans-serif", transform: `rotate(${15 + i * 30} ${tx} ${ty})` }).textContent = g + '︎'; });
+  for (let i = 0; i < 16; i++) { const a = i * 22.5 * D, L = i % 2 ? 30 : 38; el($('sun'), 'path', { d: `M${200 + 22 * Math.cos(a)} ${188 + 22 * Math.sin(a)}L${200 + L * Math.cos(a)} ${188 + L * Math.sin(a)}`, 'stroke-width': 3 }); }
+  el($('sun'), 'circle', { cx: 200, cy: 188, r: 20, fill: '#f2c94c', stroke: '#8a6417', 'stroke-width': 1.5 });
+  cloud($('art-clouds'), 10, 372, 1.1); cloud($('art-clouds'), 300, 384, 1.1); cloud($('art-clouds'), 150, 404, .8);
+  const co = $('corner'); for (let i = 0; i < 13; i++) { const a = (95 + i * 7.5) * D, L = i % 2 ? 78 : 108; el(co, 'path', { d: `M${118 + 30 * Math.cos(a)} ${30 + 30 * Math.sin(a)}L${118 + L * Math.cos(a)} ${30 + L * Math.sin(a)}`, stroke: '#8a6417', 'stroke-width': 1 }); }
+  el(co, 'path', { d: sparkle(118, 30, 24), fill: '#8a6417' });
+
+  /* armillary sphere: 3D rings projected to the page */
+  function armillary(back, front, CX, CY, K) {
+    const YAW = 35 * D, TILT = 18 * D, EPS = 23.4 * D, LAT = 40 * D, cy_ = Math.cos(YAW), sy_ = Math.sin(YAW), ct = Math.cos(TILT), st = Math.sin(TILT);
+    const view = ([x, y, z]) => { const x1 = x * cy_ + z * sy_, z1 = -x * sy_ + z * cy_; return [CX + K * x1, CY - K * (y * ct - z1 * st), y * st + z1 * ct]; };
+    const add = (a, b, k) => [a[0] + b[0] * k, a[1] + b[1] * k, a[2] + b[2] * k], mix = (a, ka, b, kb) => [a[0] * ka + b[0] * kb, a[1] * ka + b[1] * kb, a[2] * ka + b[2] * kb];
+    const AX = [0, Math.sin(LAT), Math.cos(LAT)], E1 = [1, 0, 0], E2 = [0, AX[2], -AX[1]], O = [0, 0, 0];
+    const mk = w => ({ b: el(back, 'path', { fill: 'none', stroke: '#a8822f', 'stroke-width': w * K * .8, 'stroke-linecap': 'round' }), f: el(front, 'path', { fill: 'none', stroke: '#8a6417', 'stroke-width': w * K, 'stroke-linecap': 'round' }), h: el(front, 'path', { fill: 'none', stroke: '#f6dc92', 'stroke-width': w * K * .45, 'stroke-linecap': 'round' }) });
+    const P = { col1: mk(4), col2: mk(4), tn: mk(3.4), ts: mk(3.4), eq: mk(5), ecl: mk(9), mer: mk(9), hor: mk(12) };
+    const ring = (p, c, u, v, r) => { let f = '', b = '', last = null, prev = null;
+      for (let i = 0; i <= 80; i++) { const a = i / 80 * 2 * Math.PI, q = view(add(add(c, u, r * Math.cos(a)), v, r * Math.sin(a))), fr = q[2] >= 0, pt = q[0].toFixed(1) + ' ' + q[1].toFixed(1);
+        if (prev !== null && fr === last) { if (fr) f += 'L' + pt; else b += 'L' + pt; } else { const s = prev === null ? pt : prev + 'L' + pt; if (fr) f += 'M' + s; else b += 'M' + s; } last = fr; prev = pt; }
+      p.f.setAttribute('d', f); p.h.setAttribute('d', f); p.b.setAttribute('d', b); };
+    return th => { const c = Math.cos(th), s = Math.sin(th), a1 = mix(E1, c, E2, s), a2 = mix(E1, -s, E2, c);
+      ring(P.hor, O, [1, 0, 0], [0, 0, 1], 172); ring(P.mer, O, [0, 1, 0], [0, 0, 1], 158); ring(P.eq, O, a1, a2, 138);
+      ring(P.tn, add(O, AX, 138 * Math.sin(EPS)), a1, a2, 138 * Math.cos(EPS)); ring(P.ts, add(O, AX, -138 * Math.sin(EPS)), a1, a2, 138 * Math.cos(EPS));
+      ring(P.ecl, O, a1, mix(a2, Math.cos(EPS), AX, Math.sin(EPS)), 138); ring(P.col1, O, a1, AX, 138); ring(P.col2, O, a2, AX, 138); };
   }
-  function drawArmillary(theta) {
-    const c = Math.cos(theta), s = Math.sin(theta), a1 = mix(E1, c, E2, s), a2 = mix(E1, -s, E2, c), O = [0, 0, 0];
-    drawRing(ringPaths.horizon, O, [1, 0, 0], [0, 0, 1], 172);
-    drawRing(ringPaths.meridian, O, [0, 1, 0], [0, 0, 1], 158);
-    drawRing(ringPaths.equator, O, a1, a2, 138);
-    drawRing(ringPaths.tropN, add(O, AXIS, 138 * Math.sin(EPS)), a1, a2, 138 * Math.cos(EPS));
-    drawRing(ringPaths.tropS, add(O, AXIS, -138 * Math.sin(EPS)), a1, a2, 138 * Math.cos(EPS));
-    drawRing(ringPaths.ecliptic, O, a1, mix(a2, Math.cos(EPS), AXIS, Math.sin(EPS)), 138);
-    drawRing(ringPaths.col1, O, a1, AXIS, 138);
-    drawRing(ringPaths.col2, O, a2, AXIS, 138);
-    const p0 = view(add(O, AXIS, -158)), p1 = view(add(O, AXIS, 158)), mid = view(O), seg = (a, b) => `M${a[0].toFixed(1)} ${a[1].toFixed(1)}L${b[0].toFixed(1)} ${b[1].toFixed(1)}`;
-    ringPaths.axis.b.setAttribute('d', seg(p0, mid)); ringPaths.axis.f.setAttribute('d', seg(mid, p1)); ringPaths.axis.h.setAttribute('d', seg(mid, p1));
-  }
+  const drawBig = armillary($('card-back'), $('card-front'), 200, 188, 0.6);
 
-  /* ---- Fig. 3: nautilus, a logarithmic spiral with chamber walls ---- */
-  (function shell() {
-    const g = document.getElementById('shell'), cx = 104, cy = 104, grow = Math.log(3.1) / (2 * Math.PI), tMax = 5.2 * Math.PI, r = t => 78 * Math.exp(grow * (t - tMax));
-    const pt = (t, k = 1) => [(cx + r(t) * k * Math.cos(t)).toFixed(1), (cy + r(t) * k * Math.sin(t)).toFixed(1)].join(' ');
-    let outline = 'M' + pt(tMax - 2 * Math.PI); for (let t = tMax - 2 * Math.PI; t <= tMax + 1e-6; t += 0.06) outline += 'L' + pt(t); outline += 'Z';
-    let spiral = 'M' + pt(0); for (let t = 0; t <= tMax + 1e-6; t += 0.06) spiral += 'L' + pt(t);
-    let septa = ''; for (let t = tMax - 0.75; t > 2.2 * Math.PI; t -= 0.42) { const m = t - 0.5; septa += `M${pt(t)}Q${(cx + r(m) * 0.62 * Math.cos(m)).toFixed(1)} ${(cy + r(m) * 0.62 * Math.sin(m)).toFixed(1)} ${pt(t - 2 * Math.PI)}`; }
-    el(g, 'path', { d: outline, fill: 'url(#g-shell)' });
-    el(g, 'path', { d: septa, fill: 'none', stroke: '#a8663a', 'stroke-width': 1.3 });
-    el(g, 'path', { d: spiral, fill: 'none', stroke: '#7a4524', 'stroke-width': 2.2, 'stroke-linecap': 'round', 'stroke-linejoin': 'round' });
-  })();
+  /* shelves: rows of books with one curiosity each */
+  const BOOKS = ['#6f1d3a', '#7d2b1f', '#1f5a50', '#24306e', '#5a3a1a', '#8a2f3c', '#2f4a3a', '#3b2a5c'];
+  const OBJ = {
+    sphere: `<svg width="84" height="104" viewBox="0 0 84 104"><g fill="none" stroke="#d9a441" stroke-width="2.4"><circle cx="42" cy="40" r="32"/><ellipse cx="42" cy="40" rx="36" ry="10" stroke-width="3.4"/><ellipse cx="42" cy="40" rx="12" ry="32"/><ellipse cx="42" cy="40" rx="32" ry="14" transform="rotate(-28 42 40)"/></g><circle cx="42" cy="40" r="6" fill="#f2c94c"/><rect x="39" y="72" width="6" height="22" fill="#b8892b"/><path d="M22 104 Q42 86 62 104Z" fill="#d9a441"/></svg>`,
+    crystal: `<svg width="80" height="76" viewBox="0 0 80 76"><ellipse cx="38" cy="71" rx="34" ry="5" fill="#d8d0e6"/><g stroke="#5b3a94" stroke-width="1"><path d="M30 70 L22 28 L34 6 L46 28 L42 70Z" fill="#b99be8"/><path d="M34 6 L34 70" stroke="#e6d8ff"/><path d="M46 70 L48 38 L58 22 L66 40 L62 70Z" fill="#9d7fd8"/><path d="M12 70 L8 46 L16 34 L24 46 L24 70Z" fill="#cdb6f2"/></g></svg>`,
+    globe: `<svg width="92" height="110" viewBox="0 0 92 110"><circle cx="44" cy="44" r="34" fill="#d9c8a0"/><g fill="#8fae8a"><path d="M24 30 Q36 18 46 28 Q40 40 30 44Z"/><path d="M50 40 Q66 34 70 50 Q62 66 52 58Z"/><path d="M28 56 Q36 54 38 66 Q30 70 26 62Z"/></g><circle cx="44" cy="44" r="34" fill="none" stroke="#6b4c10" stroke-width="1.5"/><path d="M14 22 A40 40 0 0 0 44 86" fill="none" stroke="#d9a441" stroke-width="4"/><rect x="41" y="80" width="6" height="18" fill="#b8892b"/><path d="M22 110 Q44 92 66 110Z" fill="#d9a441"/></svg>`,
+    bottles: `<svg width="70" height="70" viewBox="0 0 70 70"><g stroke="#9fc0d8" stroke-width="1.4" fill="#cfe6f5" fill-opacity=".45"><path d="M10 68 V34 Q10 28 16 26 V16 H26 V26 Q32 28 32 34 V68Z"/><path d="M40 68 V44 Q40 40 45 38 V30 H53 V38 Q58 40 58 44 V68Z"/></g><rect x="15" y="10" width="12" height="7" fill="#8a6417"/><rect x="44" y="25" width="10" height="6" fill="#8a6417"/></svg>`,
+    frame: `<svg width="100" height="92" viewBox="0 0 100 92"><rect x="2" y="2" width="96" height="88" fill="#b8892b" stroke="#6b4c10" stroke-width="2"/><rect x="11" y="11" width="78" height="70" fill="#f7ebd1"/><g fill="#9bbf8a" stroke="#4b6b45" stroke-width="1"><path d="M50 46 Q30 18 20 34 Q24 50 50 48Z"/><path d="M50 46 Q70 18 80 34 Q76 50 50 48Z"/><path d="M50 48 Q34 56 38 70 Q48 64 50 50Z"/><path d="M50 48 Q66 56 62 70 Q52 64 50 50Z"/></g><path d="M50 36 V66" stroke="#4b3a22" stroke-width="2.4" stroke-linecap="round"/></svg>`,
+    shell: () => { const cx = 46, cy = 44, grow = Math.log(3.1) / (2 * Math.PI), tM = 5.2 * Math.PI, r = t => 38 * Math.exp(grow * (t - tM)), pt = t => (cx + r(t) * Math.cos(t)).toFixed(1) + ' ' + (cy + r(t) * Math.sin(t)).toFixed(1);
+      let o = 'M' + pt(tM - 2 * Math.PI), sp = 'M' + pt(0), se = ''; for (let t = tM - 2 * Math.PI; t <= tM; t += .08) o += 'L' + pt(t); for (let t = 0; t <= tM; t += .08) sp += 'L' + pt(t); for (let t = tM - .7; t > 2.3 * Math.PI; t -= .45) se += `M${pt(t)}L${pt(t - 2 * Math.PI)}`;
+      return `<svg width="92" height="100" viewBox="0 0 92 100"><path d="${o}Z" fill="#f1cfa0"/><path d="${se}" stroke="#a8663a" fill="none"/><path d="${sp}" fill="none" stroke="#7a4524" stroke-width="2"/><rect x="43" y="80" width="6" height="12" fill="#b8892b"/><path d="M28 100 Q46 86 64 100Z" fill="#d9a441"/></svg>`; },
+  };
+  const plan = { left: ['bottles', 'sphere', 'frame', 'crystal'], right: ['frame', 'shell', 'globe', 'bottles'] };
+  document.querySelectorAll('.shelves').forEach(side => { const key = side.classList.contains('left') ? 'left' : 'right';
+    plan[key].forEach((name, row) => { const sh = document.createElement('div'); sh.className = 'shelf'; const n = 3 + Math.floor(rnd() * 2);
+      let books = ''; for (let i = 0; i < n; i++) books += `<div class="book" style="width:${13 + Math.round(rnd() * 11)}px;height:${78 + Math.round(rnd() * 44)}px;background-color:${BOOKS[Math.floor(rnd() * BOOKS.length)]}"></div>`;
+      const obj = typeof OBJ[name] === 'function' ? OBJ[name]() : OBJ[name];
+      sh.innerHTML = (row + (key === 'left' ? 0 : 1)) % 2 ? books + obj : obj + books; side.appendChild(sh); });
+    const v = side.querySelector('.vine'); el(v, 'path', { d: 'M120 0 C120 60 70 80 80 150 C88 210 40 240 50 320', fill: 'none', stroke: '#3f6b3a', 'stroke-width': 3 });
+    [[118, 30, 30], [98, 62, -40], [82, 96, 25], [78, 132, -35], [84, 168, 30], [72, 204, -30], [56, 238, 28], [46, 272, -32], [50, 306, 10]].forEach(([x, y, rot], i) => el(v, 'path', { d: 'M0 0 q-16 -6 -22 12 q6 22 22 18 q16 4 22 -18 q-6 -18 -22 -12Z', fill: i % 2 ? '#5f9a52' : '#4a8044', stroke: '#2f5a2c', 'stroke-width': 1, transform: `translate(${x} ${y}) rotate(${rot}) scale(${(1.15 - i * .04).toFixed(2)})` })); });
 
-  /* ---- Fig. 4: stars on the card ---- */
-  const star = (cx, cy, R, r, n, rot = -90) => { let d = ''; for (let i = 0; i < n * 2; i++) { const a = (rot + i * 180 / n) * D, k = i % 2 ? r : R; d += (i ? 'L' : 'M') + (cx + k * Math.cos(a)).toFixed(1) + ' ' + (cy + k * Math.sin(a)).toFixed(1); } return d + 'Z'; };
-  document.getElementById('bigstar').setAttribute('d', star(110, 84, 26, 10, 8));
-  [[84, 58, 5], [136, 58, 5], [80, 96, 4], [140, 96, 4], [92, 124, 4.5], [128, 124, 4.5], [110, 128, 3.5]].forEach(([x, y, R]) => el(document.getElementById('smallstars'), 'path', { d: star(x, y, R, R * 0.42, 8) }));
-
-  /* ---- Fig. 5: zoetrope slits passing across the front of the drum ---- */
-  const slits = Array.from({ length: 12 }, () => el(document.getElementById('slits'), 'rect', { y: 70, height: 26, rx: 1 }));
-  function drawSlits(theta) {
-    slits.forEach((s, i) => { const a = theta + i * 30 * D, c = Math.cos(a), w = 7 * Math.max(0, c), drop = 14 * Math.sqrt(Math.max(0, 1 - Math.sin(a) ** 2)) - 8;
-      s.setAttribute('x', (110 + 62 * Math.sin(a) - w / 2).toFixed(1)); s.setAttribute('width', w.toFixed(1)); s.setAttribute('y', (70 + drop).toFixed(1)); s.setAttribute('visibility', c > 0.12 ? 'visible' : 'hidden'); });
-  }
-
-  function frame(ms) { const t = ms / 1000; drawArmillary(t * 0.16 + 0.6); drawSlits(t * 0.5); if (!still) requestAnimationFrame(frame); }
-  frame(0); if (!still) requestAnimationFrame(frame);
+  function frame(ms) { drawBig(ms / 1000 * 0.16 + 0.6); if (!still) requestAnimationFrame(frame); }
+  frame(0);
 })();
 </script>
 </body>
