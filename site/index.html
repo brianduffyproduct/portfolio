@@ -30,11 +30,11 @@
   color-scheme: light;
 }
 * { box-sizing: border-box; }
-html { background: var(--wood-dark); }
-body { margin: 0; background: var(--wood-dark); color: var(--ink); font: 400 18px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
+html { background: #151a48; }
+body { margin: 0; background: #151a48 url(/assets/home/wallpaper.svg) center top / 140px 220px; color: var(--ink); font: 400 18px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
 img { display: block; max-width: 100%; }
 a:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
-.stage { container-type: inline-size; max-width: 1600px; margin: 0 auto; overflow: hidden; background: #3a160c; box-shadow: 0 0 70px rgba(0,0,0,.7); }
+.stage { container-type: inline-size; max-width: 1440px; margin: 0 auto; overflow: hidden; background: #3a160c; box-shadow: 0 0 0 3px #8a6417, 0 0 0 5px #2a120a, 0 0 80px 10px rgba(0,0,0,.85); }
 
 /* ---- sky ---- */
 .sky { position: relative; display: flex; flex-direction: column; min-height: clamp(310px, 33.4cqw, 540px); background: var(--night) url(/assets/home/sky.webp) center top / cover no-repeat; }
@@ -52,11 +52,11 @@ h1 { margin: 0; font: 400 clamp(52px, 8.2cqw, 128px)/1 var(--font-display); colo
 .ribbon span { position: absolute; inset: 6% 15% 36% 15%; display: grid; place-items: center; font: italic 400 2.35cqi/1.2 var(--font-serif); color: var(--ink); white-space: nowrap; }
 
 /* ---- room ---- */
-.room { position: relative; display: grid; grid-template-columns: var(--side) minmax(0, 1fr) var(--side); --side: clamp(160px, 19cqw, 310px); }
-.shelf { margin-top: -10cqw; z-index: 2; background: #2a120a top / auto 100% no-repeat; box-shadow: 0 0 24px rgba(0, 0, 0, .6); }
-.shelf.left { background-image: url(/assets/home/shelf-left.webp); background-position: right top; }
-.shelf.right { background-image: url(/assets/home/shelf-right.webp); background-position: left top; }
-.wall { position: relative; padding: clamp(60px, 6.5cqw, 96px) clamp(14px, 3cqw, 46px) calc(13cqw + 26px); background: #5a1f10 url(/assets/home/wood.webp) center top / 520px; box-shadow: inset 0 14px 22px rgba(0, 0, 0, .5), inset 24px 0 30px -12px rgba(0, 0, 0, .55), inset -24px 0 30px -12px rgba(0, 0, 0, .55); }
+.room { position: relative; display: grid; grid-template-columns: var(--side) minmax(0, 1fr) var(--side); --side: clamp(150px, 19cqw, 274px); background: #5a1f10 url(/assets/home/wood.webp) center top / 520px; box-shadow: inset 0 14px 22px rgba(0, 0, 0, .5); }
+.shelf { position: absolute; z-index: 2; bottom: 3cqw; width: calc(var(--side) + 1.5cqw); height: auto; max-width: none; filter: drop-shadow(0 0 16px rgba(0, 0, 0, .65)); pointer-events: none; }
+.shelf.left { left: -1cqw; }
+.shelf.right { right: -1cqw; }
+.wall { position: relative; padding: clamp(60px, 6.5cqw, 96px) clamp(14px, 3cqw, 46px) calc(13cqw + 26px); grid-column: 2; }
 h2 { position: absolute; z-index: 4; top: 0; left: 50%; transform: translate(-50%, -50%); width: clamp(240px, 26cqw, 380px); aspect-ratio: 986 / 176; margin: 0; display: grid; place-items: center; background: url(/assets/home/plaque.webp) center / 100% 100% no-repeat; filter: drop-shadow(0 5px 6px rgba(0, 0, 0, .55)); font: 400 clamp(17px, 1.9cqw, 26px) var(--font-serif); letter-spacing: .32em; text-indent: .32em; text-transform: uppercase; color: var(--gold-light); }
 
 .cardwrap { filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .6)); }
@@ -82,6 +82,7 @@ footer { position: relative; z-index: 3; padding: 12px 24px 18px; text-align: ce
   .nav .who, .nav .moons { display: none; }
   .nav a, .nav .soon { padding-inline: 12px; }
   .room { grid-template-columns: minmax(0, 1fr); }
+  .wall { grid-column: 1; }
   .shelf { display: none; }
   .title { padding-block: 74px 48px; }
   .ribbon { container-type: normal; width: 92%; aspect-ratio: auto; padding: 8px 16px; background: linear-gradient(#fbf0d2, #ecd7a6); border-radius: 3px; }
@@ -113,21 +114,21 @@ footer { position: relative; z-index: 3; padding: 12px 24px 18px; text-align: ce
   </header>
 
   <div class="room">
-    <div class="shelf left" aria-hidden="true"></div>
+    <img class="shelf left" src="/assets/home/shelf-left.webp" width="620" height="1915" alt="">
     <main class="wall" id="projects">
       <h2>Projects</h2>
       <div class="cardwrap"><article class="card">
         <img class="sunburst" src="/assets/home/sunburst.webp" width="500" height="308" alt="">
         <img class="art" src="/assets/home/spherechart.webp" width="900" height="900" alt="A golden armillary sphere with a sun at its centre, inside a ring of zodiac signs, against a night sky.">
         <div class="text">
-          <h3><a href="/spherechart/">Spherechart</a></h3>
+          <h3><a href="/spherechart/">SphereChart</a></h3>
           <p>I've been studying <a href="https://www.instagram.com/brianduffygram/">Tarot as a healing art</a> for 15 years. The history of Tarot and Astrology are deeply intertwined, but I always had trouble getting started with learning Astrology, because I couldn't clearly visualize how it worked. I collaborated with Claude using Fable 5.2 to build a tool for understanding how exactly astrological charts are depicting what we see when we look up at the sky.</p>
-          <a class="button" href="/spherechart/">Open Spherechart &rarr;</a>
+          <a class="button" href="/spherechart/">Open SphereChart &rarr;</a>
           <p class="smallscreen">Best viewed on a laptop or desktop.</p>
         </div>
       </article></div>
     </main>
-    <div class="shelf right" aria-hidden="true"></div>
+    <img class="shelf right" src="/assets/home/shelf-right.webp" width="620" height="1915" alt="">
   </div>
 
   <img class="desk" src="/assets/home/desk.webp" width="2172" height="724" alt="">
