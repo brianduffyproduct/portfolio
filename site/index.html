@@ -46,28 +46,29 @@ a:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
 .nav a:hover { border-color: var(--gold); }
 .nav .soon { cursor: default; }
 .nav .moons { width: clamp(180px, 20cqw, 300px); height: auto; }
-.title { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(4px, 1cqw, 14px); padding: 4.5cqw 16px 5cqw; text-align: center; }
+.title { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(4px, .8cqw, 12px); padding: 5cqw 16px 6.5cqw; text-align: center; }
 h1 { margin: 0; font: 400 clamp(52px, 8.2cqw, 128px)/1 var(--font-display); color: var(--cream); text-shadow: 0 .03em 0 #7a5a1c, 0 .06em .05em rgba(10, 8, 40, .9), 0 0 .35em rgba(246, 220, 146, .35); text-wrap: balance; }
-.ribbon { container-type: inline-size; position: relative; width: min(88cqw, 900px); aspect-ratio: 1100 / 178; margin: 0; background: url(/assets/home/ribbon.webp) center / 100% 100% no-repeat; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, .35)); }
-.ribbon span { position: absolute; inset: 6% 15% 36% 15%; display: grid; place-items: center; font: italic 400 2.35cqi/1.2 var(--font-serif); color: var(--ink); white-space: nowrap; }
+.role { margin: clamp(2px, .6cqw, 10px) 0 0; font: 400 clamp(17px, 2.1cqw, 31px) var(--font-serif); letter-spacing: .34em; text-indent: .34em; text-transform: uppercase; color: var(--gold-light); text-shadow: 0 2px 3px rgba(10, 8, 40, .9); }
+.lede { margin: 0; font: italic 400 clamp(17px, 1.75cqw, 26px)/1.35 var(--font-serif); color: var(--cream); text-shadow: 0 2px 4px rgba(10, 8, 40, .95), 0 0 14px rgba(10, 8, 40, .8); text-wrap: balance; }
 
 /* ---- room ---- */
 .room { position: relative; display: grid; grid-template-columns: var(--side) minmax(0, 1fr) var(--side); --side: clamp(150px, 19cqw, 274px); background: #5a1f10 url(/assets/home/wood.webp) center top / 520px; box-shadow: inset 0 14px 22px rgba(0, 0, 0, .5); }
 .shelf { position: absolute; z-index: 2; bottom: 3cqw; width: calc(var(--side) + 1.5cqw); height: auto; max-width: none; filter: drop-shadow(0 0 16px rgba(0, 0, 0, .65)); pointer-events: none; }
 .shelf.left { left: -1cqw; }
 .shelf.right { right: -1cqw; }
-.wall { position: relative; padding: clamp(60px, 6.5cqw, 96px) clamp(14px, 3cqw, 46px) calc(13cqw + 26px); grid-column: 2; }
+.wall { position: relative; z-index: 3; padding: clamp(56px, 6cqw, 88px) 0 calc(13cqw + 26px); margin-inline: -2.2cqw; grid-column: 2; }
 h2 { position: absolute; z-index: 4; top: 0; left: 50%; transform: translate(-50%, -50%); width: clamp(240px, 26cqw, 380px); aspect-ratio: 986 / 176; margin: 0; display: grid; place-items: center; background: url(/assets/home/plaque.webp) center / 100% 100% no-repeat; filter: drop-shadow(0 5px 6px rgba(0, 0, 0, .55)); font: 400 clamp(17px, 1.9cqw, 26px) var(--font-serif); letter-spacing: .32em; text-indent: .32em; text-transform: uppercase; color: var(--gold-light); }
 
 .cardwrap { filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .6)); }
-.card { --edge: 54px; position: relative; display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 18px clamp(20px, 3cqw, 44px); align-items: center; border: var(--edge) solid transparent; border-image: url(/assets/home/card.webp) 118 fill / var(--edge) stretch; padding: 4px 16px 8px; }
+.card { --edge: 54px; position: relative; display: grid; grid-template-columns: minmax(0, 43fr) minmax(0, 57fr); gap: 18px clamp(18px, 2.6cqw, 38px); align-items: center; border: var(--edge) solid transparent; border-image: url(/assets/home/card.webp) 118 fill / var(--edge) stretch; padding: 0 10px 2px 0; }
 .card .sunburst { position: absolute; top: calc(var(--edge) * -.82); right: calc(var(--edge) * -.84); width: calc(var(--edge) * 4.2); height: auto; opacity: .8; pointer-events: none; }
-.card .art { width: 100%; height: auto; border: 3px solid var(--gold-dark); box-shadow: 0 0 0 1px #f3d9a0, 0 3px 8px rgba(60, 30, 0, .35); }
+.card .art { width: 100%; height: auto; border: 2px solid var(--gold-dark); outline: 1.5px solid var(--gold-dark); outline-offset: 4px; box-shadow: 0 0 0 4px #f6e7c4; margin: 6px; width: calc(100% - 12px); }
 .card .text { position: relative; }
 h3 { margin: 0 0 10px; font: 400 clamp(38px, 4.3cqw, 62px)/1.05 var(--font-display); }
 h3 a { color: var(--ink); text-decoration: none; }
 h3 a:hover { text-decoration: underline; }
-.card p { margin: 0 0 20px; max-width: 56ch; font-size: clamp(17px, 1.35cqw, 20px); }
+.card p { margin: 0 0 14px; max-width: 60ch; font-size: clamp(16px, 1.32cqw, 19px); line-height: 1.5; }
+.card p + .button { margin-top: 20px; }
 .card p a { color: var(--wine); font-style: italic; text-underline-offset: 2px; }
 .button { display: grid; place-items: center; width: clamp(240px, 22cqw, 320px); aspect-ratio: 886 / 197; padding-bottom: 2px; background: url(/assets/home/button.webp) center / 100% 100% no-repeat; font: 400 clamp(19px, 1.7cqw, 24px) var(--font-serif); color: var(--cream); text-decoration: none; filter: drop-shadow(0 3px 4px rgba(60, 20, 0, .4)); }
 .button:hover { filter: drop-shadow(0 3px 4px rgba(60, 20, 0, .4)) brightness(1.15); }
@@ -82,14 +83,13 @@ footer { position: relative; z-index: 3; padding: 12px 24px 18px; text-align: ce
   .nav .who, .nav .moons { display: none; }
   .nav a, .nav .soon { padding-inline: 12px; }
   .room { grid-template-columns: minmax(0, 1fr); }
-  .wall { grid-column: 1; }
+  .wall { grid-column: 1; margin-inline: 0; padding-inline: 14px; }
   .shelf { display: none; }
   .title { padding-block: 74px 48px; }
-  .ribbon { container-type: normal; width: 92%; aspect-ratio: auto; padding: 8px 16px; background: linear-gradient(#fbf0d2, #ecd7a6); border-radius: 3px; }
-  .ribbon span { position: static; white-space: normal; font-size: 17px; line-height: 1.35; }
   .wall { padding-bottom: calc(27cqw + 22px); }
   .desk { width: 160%; max-width: none; margin-top: -33cqw; margin-left: -4%; }
   .card { --edge: 38px; grid-template-columns: minmax(0, 1fr); padding: 0 6px 6px; }
+  .lede { max-width: 22ch; }
   .card .art { max-width: 340px; margin: 0 auto; }
   .card .sunburst { display: none; }
   .card .smallscreen { display: block; }
@@ -109,7 +109,8 @@ footer { position: relative; z-index: 3; padding: 12px 24px 18px; text-align: ce
     </nav>
     <div class="title">
       <h1>Brian Duffy</h1>
-      <p class="ribbon"><span>Product Manager. This is where I put the things I design and build.</span></p>
+      <p class="role">Product Manager</p>
+      <p class="lede">This is where I put things I design and build</p>
     </div>
   </header>
 
@@ -122,7 +123,8 @@ footer { position: relative; z-index: 3; padding: 12px 24px 18px; text-align: ce
         <img class="art" src="/assets/home/spherechart.webp" width="900" height="900" alt="A golden armillary sphere with a sun at its centre, inside a ring of zodiac signs, against a night sky.">
         <div class="text">
           <h3><a href="/spherechart/">SphereChart</a></h3>
-          <p>I've been studying <a href="https://www.instagram.com/brianduffygram/">Tarot as a healing art</a> for 15 years. The history of Tarot and Astrology are deeply intertwined, but I always had trouble getting started with learning Astrology, because I couldn't clearly visualize how it worked. I collaborated with Claude using Fable 5.2 to build a tool for understanding how exactly astrological charts are depicting what we see when we look up at the sky.</p>
+          <p>I've been studying <a href="https://www.instagram.com/brianduffygram/">Tarot as a healing art</a> for 15 years. The history of Tarot and Astrology are deeply intertwined, but I always had trouble getting started with learning Astrology, because I couldn't clearly visualize how it worked.</p>
+          <p>I collaborated with Claude using Fable 5.2 to build a tool for understanding how exactly astrological charts are depicting what we see when we look up at the sky.</p>
           <a class="button" href="/spherechart/">Open SphereChart &rarr;</a>
           <p class="smallscreen">Best viewed on a laptop or desktop.</p>
         </div>
