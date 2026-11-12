@@ -95,10 +95,10 @@ footer { position: relative; z-index: 3; padding: 12px 24px 18px; text-align: ce
 .card.prose p { max-width: 64ch; margin-bottom: 16px; }
 .card.prose p a, .card.note a { font-style: normal; }
 .actions { display: flex; flex-wrap: wrap; gap: 14px; margin: 4px 0 18px; }
-.card.note { grid-template-columns: minmax(0, 1fr); max-width: 660px; margin-inline: auto; text-align: center; padding: 8px 16px 14px; }
-.card.note p { max-width: none; font-size: clamp(18px, 1.45cqw, 21px); }
-.contacts { list-style: none; margin: 0; padding: 0; display: grid; gap: 16px; }
-.contacts span { display: block; font: 400 13px var(--font-serif); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
+.card.note { grid-template-columns: minmax(0, 1fr); max-width: 660px; margin-inline: auto; text-align: center; padding: 30px 16px 38px; }
+.card.note p { max-width: none; margin-bottom: 36px; font-size: clamp(18px, 1.45cqw, 21px); }
+.contacts { list-style: none; margin: 0; padding: 0; display: grid; gap: 34px; }
+.contacts span { display: block; margin-bottom: 10px; font: 400 13px var(--font-serif); letter-spacing: .2em; text-transform: uppercase; color: var(--ink-soft); }
 .contacts a { font: 400 clamp(20px, 1.9cqw, 26px) var(--font-serif); color: var(--wine); text-underline-offset: 3px; overflow-wrap: anywhere; }
 @media (max-width: 760px) {
   .sky.short .title { padding-block: 64px 30px; }
