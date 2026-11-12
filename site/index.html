@@ -9,92 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital,wght@0,400;0,700;1,400&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet">
-<style>
-:root {
-  /* Layout: Brian's painted study, assembled from separate pieces of artwork so it can flex.
-     Sky across the top with the name set over it in live type; a wood-panelled wall with a
-     bookshelf either side and the project card in the middle; the desk overlapping the bottom.
-     One visual world, so a single theme by choice. */
-  --night: #141a4a;
-  --wood-dark: #2a120a;
-  --ink: #1d1b3f;
-  --ink-soft: #55506b;
-  --wine: #6a1b36;
-  --gold: #d9a441;
-  --gold-light: #f6dc92;
-  --gold-dark: #8a6417;
-  --cream: #fbf1d6;
-  --font-display: 'Libre Caslon Display', 'Libre Caslon Text', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --font-serif: 'Libre Caslon Text', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif;
-  --font-body: 'Source Sans 3', 'Segoe UI', system-ui, -apple-system, sans-serif;
-  color-scheme: light;
-}
-* { box-sizing: border-box; }
-html { background: #151a48; }
-body { margin: 0; background: #151a48 url(/assets/home/wallpaper.svg?v=820e1151) center top / 140px 220px; color: var(--ink); font: 400 18px/1.55 var(--font-body); -webkit-font-smoothing: antialiased; }
-img { display: block; max-width: 100%; }
-a:focus-visible { outline: 3px solid var(--gold-light); outline-offset: 3px; }
-.stage { container-type: inline-size; max-width: 1440px; margin: 0 auto; overflow: hidden; background: #3a160c; box-shadow: 0 0 0 3px #8a6417, 0 0 0 5px #2a120a, 0 0 80px 10px rgba(0,0,0,.85); }
-
-/* ---- sky ---- */
-.sky { position: relative; display: flex; flex-direction: column; min-height: clamp(310px, 33.4cqw, 540px); background: var(--night) url(/assets/home/sky.webp?v=e36b3af7) center top / cover no-repeat; }
-.nav { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px clamp(10px, 2.4cqw, 34px); padding: 6px 16px; background: linear-gradient(rgba(14, 17, 58, .94), rgba(14, 17, 58, .82)); border-bottom: 2px solid var(--gold); font: 400 clamp(16px, 1.5cqw, 21px) var(--font-serif); color: var(--cream); }
-.nav .sun { width: 46px; height: auto; margin: -4px 0; }
-.nav .who { font-size: 1.15em; padding-right: clamp(10px, 2.4cqw, 34px); border-right: 1px solid rgba(246, 220, 146, .6); }
-.nav a, .nav .soon { padding: 3px 18px; border-radius: 9px; border: 2px solid transparent; color: var(--cream); text-decoration: none; }
-.nav a[aria-current] { background: var(--wine); border-color: var(--gold); box-shadow: 0 0 0 2px #3f0d20; }
-.nav a:hover { border-color: var(--gold); }
-.nav .soon { cursor: default; }
-.nav .moons { width: clamp(180px, 20cqw, 300px); height: auto; }
-.title { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: clamp(4px, .8cqw, 12px); padding: 5cqw 16px 6.5cqw; text-align: center; }
-h1 { margin: 0; font: 400 clamp(52px, 8.2cqw, 128px)/1 var(--font-display); color: var(--cream); text-shadow: 0 .03em 0 #7a5a1c, 0 .06em .05em rgba(10, 8, 40, .9), 0 0 .35em rgba(246, 220, 146, .35); text-wrap: balance; }
-.role { margin: clamp(2px, .6cqw, 10px) 0 0; font: 400 clamp(17px, 2.1cqw, 31px) var(--font-serif); letter-spacing: .34em; text-indent: .34em; text-transform: uppercase; color: var(--gold-light); text-shadow: 0 2px 3px rgba(10, 8, 40, .9); }
-.lede { margin: 0; font: italic 400 clamp(17px, 1.75cqw, 26px)/1.35 var(--font-serif); color: var(--cream); text-shadow: 0 2px 4px rgba(10, 8, 40, .95), 0 0 14px rgba(10, 8, 40, .8); text-wrap: balance; }
-
-/* ---- room ---- */
-.room { position: relative; display: grid; grid-template-columns: var(--side) minmax(0, 1fr) var(--side); --side: clamp(150px, 19cqw, 274px); background: #5a1f10 url(/assets/home/wood.webp?v=1d04b117) center top / 520px; box-shadow: inset 0 14px 22px rgba(0, 0, 0, .5); }
-.shelf { position: absolute; z-index: 2; bottom: 3cqw; width: calc(var(--side) + 1.5cqw); height: auto; max-width: none; filter: drop-shadow(0 0 16px rgba(0, 0, 0, .65)); pointer-events: none; }
-.shelf.left { left: -1cqw; }
-.shelf.right { right: -1cqw; }
-.wall { position: relative; z-index: 3; padding: clamp(56px, 6cqw, 88px) 0 calc(13cqw + 26px); margin-inline: -2.2cqw; grid-column: 2; }
-h2 { position: absolute; z-index: 4; top: 0; left: 50%; transform: translate(-50%, -50%); width: clamp(240px, 26cqw, 380px); aspect-ratio: 986 / 176; margin: 0; display: grid; place-items: center; background: url(/assets/home/plaque.webp?v=5550ddce) center / 100% 100% no-repeat; filter: drop-shadow(0 5px 6px rgba(0, 0, 0, .55)); font: 400 clamp(17px, 1.9cqw, 26px) var(--font-serif); letter-spacing: .32em; text-indent: .32em; text-transform: uppercase; color: var(--gold-light); }
-
-.cardwrap { filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .6)); }
-.card { --edge: 54px; position: relative; display: grid; grid-template-columns: minmax(0, 43fr) minmax(0, 57fr); gap: 18px clamp(18px, 2.6cqw, 38px); align-items: center; border: var(--edge) solid transparent; border-image: url(/assets/home/card.webp?v=b124ec9e) 118 fill / var(--edge) stretch; padding: 0 10px 2px 0; }
-.card .sunburst { position: absolute; top: calc(var(--edge) * -.82); right: calc(var(--edge) * -.84); width: calc(var(--edge) * 4.2); height: auto; opacity: .8; pointer-events: none; }
-.card .art { width: 100%; height: auto; border: 2px solid var(--gold-dark); outline: 1.5px solid var(--gold-dark); outline-offset: 4px; box-shadow: 0 0 0 4px #f6e7c4; margin: 6px; width: calc(100% - 12px); }
-.card .text { position: relative; }
-h3 { margin: 0 0 10px; font: 400 clamp(38px, 4.3cqw, 62px)/1.05 var(--font-display); }
-h3 a { color: var(--ink); text-decoration: none; }
-h3 a:hover { text-decoration: underline; }
-.card p { margin: 0 0 14px; max-width: 60ch; font-size: clamp(16px, 1.32cqw, 19px); line-height: 1.5; }
-.card p + .button { margin-top: 20px; }
-.card p a { color: var(--wine); font-style: italic; text-underline-offset: 2px; }
-.button { display: grid; place-items: center; width: clamp(240px, 22cqw, 320px); aspect-ratio: 886 / 197; padding-bottom: 2px; background: url(/assets/home/button.webp?v=d2acc1c4) center / 100% 100% no-repeat; font: 400 clamp(19px, 1.7cqw, 24px) var(--font-serif); color: var(--cream); text-decoration: none; filter: drop-shadow(0 3px 4px rgba(60, 20, 0, .4)); }
-.button:hover { filter: drop-shadow(0 3px 4px rgba(60, 20, 0, .4)) brightness(1.15); }
-.button:active { transform: translateY(1px); }
-.card .smallscreen { display: none; margin: 12px 0 0; font-size: 15px; color: var(--ink-soft); }
-
-/* ---- desk ---- */
-.desk { position: relative; z-index: 3; width: 100%; height: auto; margin-top: -20.7cqw; pointer-events: none; }
-footer { position: relative; z-index: 3; padding: 12px 24px 18px; text-align: center; font: 400 14px var(--font-serif); color: #d9bf9a; background: #1c0b06; }
-
-@media (max-width: 760px) {
-  .nav .who, .nav .moons { display: none; }
-  .nav a, .nav .soon { padding-inline: 12px; }
-  .room { grid-template-columns: minmax(0, 1fr); }
-  .wall { grid-column: 1; margin-inline: 0; padding-inline: 14px; }
-  .shelf { display: none; }
-  .title { padding-block: 74px 48px; }
-  .wall { padding-bottom: calc(27cqw + 22px); }
-  .desk { width: 160%; max-width: none; margin-top: -33cqw; margin-left: -4%; }
-  .card { --edge: 38px; grid-template-columns: minmax(0, 1fr); padding: 0 6px 6px; }
-  .lede { max-width: 22ch; }
-  .card .art { max-width: 340px; margin: 0 auto; }
-  .card .sunburst { display: none; }
-  .card .smallscreen { display: block; }
-}
-</style>
+<link rel="stylesheet" href="/assets/site.css?v=fa5b328b">
 </head>
 <body>
 <div class="stage">
@@ -103,8 +18,8 @@ footer { position: relative; z-index: 3; padding: 12px 24px 18px; text-align: ce
       <img class="sun" src="/assets/home/sun.webp?v=846c18f6" width="160" height="147" alt="">
       <span class="who">Brian Duffy</span>
       <a href="/" aria-current="page">Home</a>
-      <span class="soon" aria-disabled="true" title="Coming soon">About</span>
-      <span class="soon" aria-disabled="true" title="Coming soon">Contact</span>
+      <a href="/about/">About</a>
+      <a href="/contact/">Contact</a>
       <img class="moons" src="/assets/home/moons.webp?v=e64f7c04" width="700" height="59" alt="">
     </nav>
     <div class="title">
@@ -132,7 +47,6 @@ footer { position: relative; z-index: 3; padding: 12px 24px 18px; text-align: ce
     </main>
     <img class="shelf right" src="/assets/home/shelf-right.webp?v=385e0865" width="620" height="1879" alt="">
   </div>
-
   <img class="desk" src="/assets/home/desk.webp?v=10cb2ce1" width="2172" height="724" alt="">
   <footer>&copy; 2026 Brian Duffy</footer>
 </div>
