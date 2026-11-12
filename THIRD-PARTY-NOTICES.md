@@ -1,6 +1,6 @@
 # Third-party notices
 
-Spherechart (`site/spherechart`) includes or loads the following third-party work.
+SphereChart (`site/spherechart`) includes or loads the following third-party work.
 
 ## d3-celestial (star and constellation data)
 

@@ -6,12 +6,12 @@ The source for [brianduffyproduct.com](https://brianduffyproduct.com), Brian Duf
 
 - `site/` is exactly what gets published. Netlify serves this folder as-is.
   - `site/index.html` is the homepage.
-  - `site/spherechart/` is Spherechart, an interactive 3D sky that shows how a natal chart maps onto the real sky.
-- `src/spherechart/` holds the pieces Spherechart is assembled from.
+  - `site/spherechart/` is SphereChart, an interactive 3D sky that shows how a natal chart maps onto the real sky.
+- `src/spherechart/` holds the pieces SphereChart is assembled from.
 - `netlify.toml` tells Netlify to publish `site/` with no build step.
 - `THIRD-PARTY-NOTICES.md` lists the third-party data and libraries in use.
 
-## Changing Spherechart
+## Changing SphereChart
 
 Edit the files in `src/spherechart/`, then rebuild the published page from the repository root:
 
