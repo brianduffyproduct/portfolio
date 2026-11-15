@@ -199,6 +199,7 @@ td .up { color: var(--teal); } td .down { color: var(--muted); }
         </div>
         <div class="grp"><h3>Sky lines</h3><div class="chips">
           <label class="chip" style="--c:var(--teal)"><input type="checkbox" id="ly-horizon"><span class="sw"></span>Horizon</label>
+          <label class="chip" style="--c:var(--teal)"><input type="checkbox" id="ly-scenery"><span class="sw"></span>Buildings and trees</label>
           <label class="chip" style="--c:var(--violet)"><input type="checkbox" id="ly-meridian"><span class="sw"></span>Meridian</label>
           <label class="chip" style="--c:var(--blue)"><input type="checkbox" id="ly-equator"><span class="sw"></span>Equator and poles</label>
         </div></div>
@@ -429,7 +430,7 @@ const HOUSE_SKY = [
 
 const state = {
   utcMs: Date.now(), lat: 34.05, lon: -118.24, tz: 'America/Los_Angeles', houses: 'placidus',
-  ly: { ecl: true, signs: true, cons: true, horizon: true, meridian: true, equator: false, planets: true, arcs: false, trails: false, xray: false, day: false },
+  ly: { ecl: true, signs: true, cons: true, horizon: true, meridian: true, equator: false, planets: true, arcs: false, trails: false, xray: false, day: false, scenery: true },
   view: 'ground', hover: null, pin: null, playing: false, speed: 'hour', step: -1,
 };
 const cam = { az: 180, alt: 28, fov: 108, oaz: 200, oel: 22, zoom: 1, frame: 'horizon', tween: null, q: [1, 0, 0, 0] };
@@ -452,6 +453,34 @@ for (let d = 0; d < 360; d += 5) if (d % 30) { const h = d % 10 ? 0.7 : 1.5; G.t
 const azAlt = (az, alt) => [Math.sin(az * D2R) * Math.cos(alt * D2R), Math.sin(alt * D2R), -Math.cos(az * D2R) * Math.cos(alt * D2R)];
 for (let a = 0; a < 360; a += 6) for (let h = 0; h > -90; h -= 10) G.ground.push([azAlt(a, h), azAlt(a + 6, h), azAlt(a + 6, h - 10), azAlt(a, h - 10)]);
 
+/* skyline silhouette standing on the horizon: buildings, houses and trees as [azimuth, altitude] outlines */
+const SCENERY = (() => {
+  let seed = 11; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const out = [], poly = (kind, pts) => out.push({ kind, pts: pts.map(([a, h]) => azAlt(a, h)) }), B = -0.6;
+  const box = (kind, a, h0, w, h) => poly(kind, [[a, h0], [a, h0 + h], [a + w, h0 + h], [a + w, h0]]);
+  let az = 1;
+  while (az < 355) {
+    const r = rnd();
+    if (r < 0.42) {                                   // tree
+      const h = 2.2 + rnd() * 3, w = h * (0.45 + rnd() * 0.25), c = az + w / 2;
+      box('land', c - 0.18, B, 0.36, h * 0.5 - B);
+      if (rnd() < 0.35) poly('land', [[c - w / 2, h * 0.3], [c, h * 1.15], [c + w / 2, h * 0.3]]);
+      else { const p = []; for (let i = 0; i < 14; i++) { const t = i / 14 * 2 * Math.PI; p.push([c + w / 2 * Math.cos(t), h * 0.68 + h * 0.36 * Math.sin(t)]); } poly('land', p); }
+      az += w + rnd() * 1.2;
+    } else if (r < 0.62) {                            // house
+      const w = 2.2 + rnd() * 1.4, h = 1.3 + rnd() * 0.8;
+      poly('land', [[az, B], [az, h], [az + w / 2, h + w * 0.32], [az + w, h], [az + w, B]]);
+      box('light', az + w * 0.58, h * 0.35, w * 0.2, h * 0.38);
+      az += w + rnd() * 1.5;
+    } else if (r < 0.9) {                             // building
+      const w = 1.6 + rnd() * 2, h = 2.5 + rnd() * 4.5, cols = Math.floor(w / 0.7), rows = Math.floor(h / 1.1);
+      box('land', az, B, w, h - B);
+      for (let i = 0; i < cols; i++) for (let j = 0; j < rows; j++) if (rnd() < 0.4) box('light', az + (i + 0.5) * w / cols - 0.14, 0.5 + j * (h - 0.9) / rows, 0.28, 0.45);
+      az += w + rnd() * 0.8;
+    } else az += 2 + rnd() * 5;                       // open stretch
+  }
+  return out;
+})();
 const NS = STAR_DATA.length / 4, starV = new Float32Array(NS * 3), starM = new Float32Array(NS), starC = new Uint8Array(NS);
 for (let i = 0; i < NS; i++) { starV.set(sph(STAR_DATA[i * 4] / 100, STAR_DATA[i * 4 + 1] / 100), i * 3); starM[i] = STAR_DATA[i * 4 + 2] / 10; starC[i] = STAR_DATA[i * 4 + 3]; }
 const STAR_COL = ['#bcd0ff', '#ffffff', '#fff1cc', '#ffd2a3'];
@@ -654,6 +683,7 @@ function scene() {
     for (const c of cons) if (c.zodiac || (c.label && GROUND)) label(c.name, mapply(M, c.c), { italic: true, size: c.zodiac ? 12.5 : 11, color: COL.con, alpha: (c.zodiac ? 1 : 0.6) * dayDim });
     if (GROUND) for (const n of starNames) label(n.name, mapply(M, n.v), { size: 10, color: COL.muted, alpha: 0.75 * dayDim, dx: 6, dy: -7, align: 'left' });
   }
+  if (L.scenery && !passSkip(false)) drawScenery(dayDim);
   if (L.equator) {
     strokeLines(G.equator, s.Mhq, COL.blue, 1.1, 0.7, [5, 4]);
     const p = [s.Mhq[2], s.Mhq[5], s.Mhq[8]];
@@ -736,6 +766,20 @@ function scene() {
   }
 }
 
+function drawScenery(dayDim) {
+  const land = new Path2D(), landFar = new Path2D(), light = new Path2D(), d = [];
+  for (const o of SCENERY) {
+    let ok = true, far = false; d.length = 0;
+    for (const p of o.pts) { proj(p[0], p[1], p[2]); if (!pvis || px < -300 || px > W + 300 || py < -300 || py > H + 300) { ok = false; break; } far = pfar; d.push(px, py); }
+    if (!ok || (far && o.kind === 'light')) continue;
+    const path = o.kind === 'light' ? light : far ? landFar : land;
+    path.moveTo(d[0], d[1]); for (let i = 2; i < d.length; i += 2) path.lineTo(d[i], d[i + 1]); path.closePath();
+  }
+  ctx.fillStyle = '#1b3329'; ctx.strokeStyle = COL.teal; ctx.lineWidth = 1.6; ctx.lineJoin = 'round'; ctx.setLineDash([]);
+  ctx.globalAlpha = 0.5; ctx.fill(landFar);
+  ctx.globalAlpha = 0.5; ctx.stroke(land); ctx.globalAlpha = 1; ctx.fill(land);
+  ctx.globalAlpha = 0.85 * dayDim; ctx.fillStyle = COL.gold; ctx.fill(light); ctx.globalAlpha = 1;
+}
 function dayness() { const a = sky.bodies[0].alt; return clamp((a + 10) / 14, 0, 1) ** 1.5; }
 function mix(c1, c2, t) { const p = c => [1, 3, 5].map(i => parseInt(c.slice(i, i + 2), 16)), a = p(c1), b = p(c2); return `rgb(${a.map((v, i) => Math.round(v + (b[i] - v) * t)).join(',')})`; }
 
