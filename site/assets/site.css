@@ -50,6 +50,9 @@ h2 { position: absolute; z-index: 4; top: 0; left: 50%; transform: translate(-50
 .cardwrap { filter: drop-shadow(0 10px 14px rgba(0, 0, 0, .6)); }
 .card { --edge: 54px; position: relative; display: grid; grid-template-columns: minmax(0, 43fr) minmax(0, 57fr); gap: 18px clamp(18px, 2.6cqw, 38px); align-items: center; border: var(--edge) solid transparent; border-image: url(/assets/home/card.webp?v=b124ec9e) 118 fill / var(--edge) stretch; padding: 0 10px 2px 0; }
 .card .sunburst { position: absolute; top: calc(var(--edge) * -.82); right: calc(var(--edge) * -.84); width: calc(var(--edge) * 4.2); height: auto; opacity: .8; pointer-events: none; }
+.artlink { display: block; line-height: 0; border-radius: 2px; }
+.artlink img { transition: filter .2s ease, transform .2s ease; }
+.artlink:hover img { filter: brightness(1.08) saturate(1.05); transform: translateY(-2px); }
 .card .art { width: 100%; height: auto; border: 2px solid var(--gold-dark); outline: 1.5px solid var(--gold-dark); outline-offset: 4px; box-shadow: 0 0 0 4px #f6e7c4; margin: 6px; width: calc(100% - 12px); }
 .card .text { position: relative; }
 h3 { margin: 0 0 10px; font: 400 clamp(38px, 4.3cqw, 62px)/1.05 var(--font-display); }
@@ -107,3 +110,4 @@ footer { position: relative; z-index: 3; padding: 12px 24px 18px; text-align: ce
   .card.prose .portrait { width: min(240px, 80%); }
 }
 
+@media (prefers-reduced-motion: reduce) { .artlink img { transition: none; } .artlink:hover img { transform: none; } }
